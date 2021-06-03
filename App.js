@@ -8,12 +8,13 @@ import mainReducer from './redux/reducers/mainReducer'
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import GamesAll from './screens/gameScreens/GamesAll';
+import App2 from './App2';
 
 const myStore = createStore(mainReducer, applyMiddleware(thunk))
-export default function App() {
+const App = () => {
   return (
     <Provider store={myStore}>
-      {/* <GamesAll /> */}
+      <App2/>
     </Provider>
   );
 }
