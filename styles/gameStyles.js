@@ -4,7 +4,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 const gameStyles = StyleSheet.create({
     container: {
         width: wp('100%'),
-        height: hp('45%'),
+        height: hp('40%'),
         backgroundColor: '#061320' 
     },
     titleMain: {
@@ -20,15 +20,32 @@ const gameStyles = StyleSheet.create({
         marginLeft: wp('3%')
     }
     ,
+    imageGameIBMain: {
+        width: wp('95%'),
+        height: 250,
+        justifyContent:'flex-end',
+        resizeMode: 'cover'
+    },
     imageGameIB: {
         width: 180,
         height: 250,
         justifyContent:'flex-end',
         resizeMode: 'cover'
     },
+    containerCardsMain:{
+        backgroundColor: '#061320',
+        width: wp('100%'),
+    }
+    ,
     containerCards:{
         backgroundColor: '#061320',
         paddingLeft: wp('4%'),
+        paddingTop:wp('4%'),
+        paddingBottom:wp('4%'),
+    }
+    ,
+    containerCardsTwo:{
+        backgroundColor: '#061320',
         paddingTop:wp('4%'),
         paddingBottom:wp('4%'),
     }
@@ -63,16 +80,15 @@ const gameStyles = StyleSheet.create({
     },
     layoutRecentGames:{
         width: wp('100%'),
-        height: hp('50%'),
-        backgroundColor:'blue'
-    },
-    boxOne:{
-        flex:3,
-        backgroundColor:'red'
+        flexDirection:'row',
+        alignItems:'center',
+        flexWrap:'wrap',
+        justifyContent:'space-evenly',
+        backgroundColor:'#061320'
     },
     boxTwo:{
-        flex:2,
-        backgroundColor:'green'
+        width:wp('90%'),
+        height: hp('25%')
     }
 });
 
