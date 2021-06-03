@@ -12,14 +12,10 @@ const gamesActions = {
             }        
         }
     },
-    filterGames: (filterBy,product, flag)=>{
-        return async (dispatch, getState)=>{
-            dispatch({ type: 'FILTER_GAMES', payload: {value: filterBy,product:product, flag: flag} })
-            try {
-            } catch (error) {
-                
-                console.log(error);
-            }
+    filterGames: (value)=>{
+        console.log(value);
+        return (dispatch, getState)=>{
+            dispatch({ type: 'FILTER_GAMES', payload: value})
         }
     }
 }

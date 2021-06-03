@@ -2,10 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import gamesActions from '../../redux/actions/gamesActions';
-import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import gameStyles from '../../styles/gameStyles';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import Icon from 'react-native-vector-icons/Ionicons';
+const myIcon = <Icon name="rocket" size={30} color="#900" />;
 const GameStore = (props) => {
     useEffect(() => {
         props.loadGames()
@@ -50,11 +52,11 @@ const GameStore = (props) => {
                         <ImageBackground source={{ uri: popularGames[2].imageBanner }} style={gameStyles.imageGameIB}>
                         </ImageBackground>
                     </View>
-                </View> : null}
+                </View> : <ActivityIndicator />}
             {/*--------------------- Segundo layout ------------------*/}
             <View style={[gameStyles.containerCards, { paddingTop: hp('3%'), paddingBottom: hp('3%') }]}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: hp('2%') }}>
-                    <Text Icon="dog" style={gameStyles.titleSecundary}>Recent Games</Text>
+                <Icon name="time-outline" size={30} color="#fff" /><Text Icon="dog" style={gameStyles.titleSecundary}>Recent Games</Text>
                     <Button color="white" mode="contained" style={{marginRight:15}}>See All</Button>
                 </View>
                 <ScrollView horizontal>
@@ -68,7 +70,7 @@ const GameStore = (props) => {
                                 </View>
                             )
                         })
-                        : null
+                        : <ActivityIndicator />
                     }
                 </ScrollView>
             </View>
@@ -89,7 +91,7 @@ const GameStore = (props) => {
                                 </View>
                             )
                         })
-                        : null
+                        : <ActivityIndicator />
                     }
                 </View>
             </View>
