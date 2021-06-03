@@ -4,7 +4,7 @@ const gamesActions = {
     loadGames: () => {
         return async (dispatch, getState) => {
             try {
-                const response = await axios.get('http://localhost:4000/api/games')
+                const response = await axios.get('http://game-x-arg.herokuapp.com/api/games')
                 dispatch({type: 'LOAD_GAMES', payload: response.data.response})
             } catch (error) {             
                 console.log(error);
@@ -12,14 +12,10 @@ const gamesActions = {
             }        
         }
     },
-    filterGames: (filterBy,product, flag)=>{
-        return async (dispatch, getState)=>{
-            dispatch({ type: 'FILTER_GAMES', payload: {value: filterBy,product:product, flag: flag} })
-            try {
-            } catch (error) {
-                
-                console.log(error);
-            }
+    filterGames: (value)=>{
+        console.log(value);
+        return (dispatch, getState)=>{
+            dispatch({ type: 'FILTER_GAMES', payload: value})
         }
     }
 }

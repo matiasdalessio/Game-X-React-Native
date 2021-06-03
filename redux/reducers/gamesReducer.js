@@ -14,43 +14,16 @@ const gamesReducer = (state = initialState, action) => {
             }
         case 'FILTER_GAMES':
             let filterGamesComplete;
-            if (action.payload.flag) {
-                // filtro por input
-                if (action.payload.value === '') {
-                    filterGamesComplete = state.allGames
-                }
-                filterGamesComplete = state.allGames.filter(game => game.title.toLowerCase().trim().includes(action.payload.value))
-                console.log(filterGamesComplete);
+            console.log(state.gamesFiltered.length);
+            let valueInput = action.payload.trim().toLowerCase()
+            if (valueInput === 'add') {
+                filterGamesComplete = state.allGames.slice(0,state.gamesFiltered.length * 2)
             } else {
-                // filtro por tags
-                if (action.payload.product === 'games') {
-                    if (action.payload.value === 'All') {
-                        filterGamesComplete = state.allGames
-                    } else {
-                        let games = state.allGames.map(game => {
-                            if (game.genre.some(gameGenre => gameGenre === action.payload.value)) {
-                                return game
-                            } else {
-                                return false
-                            }
-                        })
-                        filterGamesComplete = games.filter(game => game !== false)
-                    }
-                } else if (action.payload.product === 'console') {
-                    if (action.payload.value === 'All') {
-                        filterGamesComplete = state.allGames
-                    } else {
-                        let games = state.allGames.map(game => {
-                            if (game.platform.some(gamePlatform => gamePlatform === action.payload.value)) {
-                                return game
-                            } else {
-                                return false
-                            }
-                        })
-                        filterGamesComplete = games.filter(game => game !== false)
-                    }
+                if (valueInput === '') {
+                    filterGamesComplete = state.allGames.slice(0,20)
+                } else {
+                    filterGamesComplete = state.allGames.filter(game => game.title.toLowerCase().trim().includes(valueInput))
                 }
-
             }
             return {
                 ...state,

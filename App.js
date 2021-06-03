@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
-import {applyMiddleware, createStore} from 'redux'
-import { Provider} from 'react-redux'
+
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import GameStore from './screens/gameScreens/GameStore'
+import { applyMiddleware, createStore } from 'redux';
 import mainReducer from './redux/reducers/mainReducer'
-import thunk from 'redux-thunk'
-import App2 from './App2'
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import GamesAll from './screens/gameScreens/GamesAll';
 
-const reduxStore = createStore(mainReducer,applyMiddleware(thunk))
-
-const App = () => {
+const myStore = createStore(mainReducer, applyMiddleware(thunk))
+export default function App() {
   return (
-    <Provider store={reduxStore}>
-      <App2/>
+    <Provider store={myStore}>
+      {/* <GamesAll /> */}
     </Provider>
   );
 }
