@@ -9,9 +9,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import NavigatorBottomTab from './navigation/NavigatorBottomTab';
-
 const App2 = (props) => {
-
   return (
       <NavigationContainer>
         <StatusBar />
@@ -29,7 +27,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   // signInLS: authActions.signInLS
-  hola2:"hola"
+
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(App2)

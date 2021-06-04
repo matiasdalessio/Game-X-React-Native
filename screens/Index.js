@@ -6,10 +6,15 @@ import {
     heightPercentageToDP as hp
   } from 'react-native-responsive-screen';
 import FabPortal from '../components/FabPortal'
+import userActions from '../redux/actions/userActions';
 
 const Index = (props)=>{
+    // console.log(props)
     useEffect(()=>{
-            // props.addListener('focus',)
+        if(props.loadNavigation && props.navigation){
+            props.loadNavigation(props.navigation)   
+            console.log('envie la action')
+        }
     })
         return (<>
                 <View style={[styles.View,{position:'relative'}]}> 
@@ -40,7 +45,6 @@ const styles = StyleSheet.create({
         fontSize:wp('8%'),
         borderRadius:120,
         borderWidth:wp('1%'),
-        //  borderStyle:'dashed',
         borderColor:'white',
         padding:wp('1.5%'),
         backgroundColor:'rgba(0,150,120,0.7)',
@@ -83,13 +87,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state =>{
     return{
-        // user : state.authReducer.user
+        // 
     }
 }
 
 const mapDispatchToProps = {
-    // getAllCitiesReference: citiesActions.getAllCities,
-    
-  };
+      loadNavigation: userActions.loadNavigation
+}  
+
 
 export default connect(mapStateToProps,mapDispatchToProps)(Index)

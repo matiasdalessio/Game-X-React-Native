@@ -94,6 +94,7 @@ const gameStyles = StyleSheet.create({
         width: wp('100%'),
         height: hp('60%')
     }
+    
 });
 
 export default gameStyles;

@@ -1,5 +1,5 @@
 import axios from "axios"
-import swal from 'sweetalert'
+// import swal from 'sweetalert'
 
 const productActions = {
 
@@ -17,7 +17,7 @@ const productActions = {
                     return respuesta.data
                 }
             } catch(error) {
-                return swal("Failed to try to connect with server", "Please try again in a few minutes", "error")
+                return console.log("Failed to try to connect with server", "Please try again in a few minutes", "error")
             }           
         }
     },
@@ -35,7 +35,7 @@ const productActions = {
                     return respuesta.data
                 }
             } catch(error) {
-                return swal("Failed to try to connect with server", "Please try again in a few minutes", "error")
+                return console.log("Failed to try to connect with server", "Please try again in a few minutes", "error")
             }           
         }
     },
