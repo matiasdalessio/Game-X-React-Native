@@ -6,6 +6,7 @@ import SignOptions from '../screens/SignOptions';
 import GameStore from '../screens/gameScreens/GameStore';
 import GamesAll from '../screens/gameScreens/GamesAll';
 import Game from '../screens/gameScreens/Game';
+import Store from '../screens/Store';
 const Tab = createBottomTabNavigator();
 
 const BottomTabs = () => {
@@ -78,6 +79,7 @@ const BottomTabs = () => {
    <Tab.Navigator tabBar={props => <BottomTabView {...props} />}>
         <Tab.Screen name="home" component={Index} />
         <Tab.Screen name="signOptions" component={SignOptions}/> 
+        <Tab.Screen name="store" component={Store}/> 
     </Tab.Navigator>
     )
 }
