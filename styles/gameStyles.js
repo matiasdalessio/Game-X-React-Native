@@ -89,6 +89,10 @@ const gameStyles = StyleSheet.create({
     boxTwo:{
         width:wp('90%'),
         height: hp('25%')
+    },
+    containerGame:{
+        width: wp('100%'),
+        height: hp('60%')
     }
 });
 
