@@ -7,12 +7,16 @@ import SignIn from "../screens/SignIn";
 import SignOptions from "../screens/SignOptions";
 import Index from "../screens/Index";
 import GameStore from "../screens/gameScreens/GameStore";
+import GamesAll from '../screens/gameScreens/GamesAll';
+import Game from '../screens/gameScreens/Game';
 import { Icon } from "react-native-elements";
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
   } from 'react-native-responsive-screen';
 // https://dribbble.com/shots/7046707-Nav-Bar-Animation
+
+
 
 const Tab = createBottomTabNavigator();
 
