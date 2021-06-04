@@ -14,56 +14,61 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
   } from 'react-native-responsive-screen';
-// https://dribbble.com/shots/7046707-Nav-Bar-Animation
-
-
 
 const Tab = createBottomTabNavigator();
 
 
 const TabNavigator = ()=>{
 
-
     const MiddleIcon = ({ navigation }) => {
         return (
           <TouchableOpacity
             onPress={() => navigation.navigate('store')}
             style={styles.container}>
-            {/* <View style={styles.imageContainer}> */}
                 <Icon  onPress={() => navigation.navigate('store')} name="shopping-outline" type="material-community" color="black" size={30}/>
-            {/* </View> */}
           </TouchableOpacity>
         );
       };
       
-    return (
-        <Tab.Navigator tabBarOptions={{showLabel:false}}>
-            <Tab.Screen name="home" component={Index} options={{
-                // tabBarIcon:()=>{<FontAwesome5 name="book-medical" size={24} color="red" />},
-                tabBarLabel:()=>null,
-                tabBarIcon:()=><Icon name="home-outline" type="material-community" size={42} />
-                // tabBarButton:()=><FontAwesome5 name="book-medical" size={24} color="red" />,
-                // tabBarBadge:()=><FontAwesome5 name="book-medical" size={24} color="red" />,
-                // tabBarBadgeStyle:()=><FontAwesome5 name="book-medical" size={24} color="red" />
-            }}/>
-           { 2 + 2 === 5 && <Tab.Screen name="signOptions" component={SignIn} options={{
-                tabBarLabel:()=>null,
-                tabBarIcon:()=><Icon name="account-circle" size={24} reverse />,
-                tabBarVisible:false
-                // tabBarVisibilityAnimationConfig:(props)=>{console.log(props)}
-            }}/> }
-            <Tab.Screen name="store" component={GameStore} options={({ navigation }) => {
-                    return {
-                        tabBarIcon: () => <MiddleIcon navigation={navigation} />,
-                    }
-            }} /> 
-            {2 + 2 === 5 && <Tab.Screen name="signIn" component={SignIn} options={{
-                tabBarLabel:()=>null,
-                tabBarIcon:()=>null,
-            }}/> }
-            <Tab.Screen name="signUp" component={SignUp} options={{
-                tabBarIcon:()=><Icon name="account-outline" type="material-community" size={42} />,
-            }}/> 
+      const SignInIcon = ()=>{
+        return <View style={{width:0,height:0}} />
+      }
+
+
+      const Navigation = (props)=>{
+          return(
+          <View style={styles.tabBar}>
+                <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("home")}>
+                    <Icon name="home-outline" type="material-community" size={42} />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.container} activeOpacity={.8} onPress={()=> props.navigation.navigate("store")}>
+                    <Icon  name="shopping-outline" type="material-community" color="black" size={30}/>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("signOptions")}>
+                    <Icon name="account-outline" type="material-community" size={42} />
+                </TouchableOpacity>              
+            </View>
+          )
+
+      }
+
+
+      return (
+        <Tab.Navigator tabBar={props=><Navigation {...props}/> } >
+            <Tab.Screen name="home" component={Index}/>
+
+             <Tab.Screen name="store" component={GameStore}/> 
+
+            <Tab.Screen name="signUp" component={SignUp}/> 
+
+            <Tab.Screen name="signIn" component={SignIn}/> 
+
+             <Tab.Screen name="signOptions" component={SignIn}/>
+
+            <Tab.Screen name="gameAll" component={GamesAll}/>
+
+            <Tab.Screen name="game" component={Game}/>
+
         </Tab.Navigator>
     )
 }
@@ -76,7 +81,8 @@ const styles = StyleSheet.create({
     },
     container: {
         position: 'absolute',
-        bottom: wp('2.5%'),
+        top: wp('-10%'),
+        left:wp('40%'),
         height: wp('20%'),
         width: wp('20%'),
         borderRadius: wp('20%'),
@@ -92,12 +98,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4.65,
         elevation: 7,
         flex: 1,
-    },
-    icon: {
-        width: 40,
-        height: 40,
-        tintColor: '#fff',
-        alignContent: 'center',
+        zIndex:100
     },
     imageContainer: {
         shadowColor: '#000',
@@ -111,52 +112,22 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
     },  
+    tabBar:{
+        width:wp('100%'),
+        height:hp('6.5%'),
+        position:'relative',
+        flexDirection:'row',
+        justifyContent:'space-around',
+        overflow:'visible'
+        // backgroundColor:'red',
+    },
+    middleIcon:{
+        padding:20,
+        transform:[{translateY:hp('-2%')}],
+        backgroundColor:'red',
+        borderRadius:wp('100%'),
+    }
 })
 
-export default TabNavigator;
 
-
-
-
-// {
-//     home: {
-//         screen: home,
-//         navigationOptions: {
-//             tabBarIcon: () => <FontAwesome5 name="book-medical" size={24} color="#CDCCCE" />
-//         },
-//     },
-//     Measures: {
-//         screen: signIn,
-//         navigationOptions: {
-//             tabBarIcon: () => <FontAwesome5 name="heartbeat" size={24} color="#CDCCCE" />
-//         }
-//     },
-//     Add: {
-//         screen: () => <View></View>,
-//         navigationOptions: {
-//             tabBarIcon: ()=>{
-//                 return <View style={styles.button}>
-//                             <FontAwesome5 name="plus" size={24} color="red" />
-//                         </View>
-//             }
-
-//         }
-//     },
-//     Treatment: {
-//         screen: signUp,
-//         navigationOptions: {
-//             tabBarIcon: () => <FontAwesome5 name="band-aid" size={24} color="#CDCCCE" />
-//         }
-//     },
-//     Profile: {
-//         screen: signOptions,
-//         navigationOptions: {
-//             tabBarIcon: () => <FontAwesome5 name="user" size={24} color="#CDCCCE" />
-//         }
-//     }
-// },
-// {
-//     tabBarOptions: {
-//         showLabel: true
-//     }
-// }
+export default TabNavigator

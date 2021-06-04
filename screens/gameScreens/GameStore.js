@@ -9,8 +9,12 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import Icon from 'react-native-vector-icons/Ionicons';
 const myIcon = <Icon name="rocket" size={30} color="#900" />;
 const GameStore = (props) => {
+    
     useEffect(() => {
         props.loadGames()
+        props.navigation.addListener('focus',()=>{
+
+        })
     }, [])
     let cities = [
         {
@@ -24,6 +28,7 @@ const GameStore = (props) => {
     let popularGames = !props.preLoader ? props.allGames.sort(() => Math.random() > 0.5 ? 1 : -1).slice(0, 3) : props.allGames
     let recentGames = !props.preLoader ? props.allGames.filter(game => game.year >= 2021) : props.allGames
     let retroGames = !props.preLoader ? props.allGames.filter(game => game.year <= 2014).slice(0, 4) : props.allGames
+
 
     return (
         <>
@@ -53,17 +58,19 @@ const GameStore = (props) => {
                                         </TouchableHighlight>
                                     </View>
                                 </View>
-                                <View style={[gameStyles.card, { marginTop: 5, backgroundColor: '#061320' }]}>
-                                    <TouchableHighlight onPress={() => props.navigation.navigate('game', { idGame: popularGames[1]._id })}>
-                                        <ImageBackground source={{ uri: popularGames[1].imageBanner }} style={gameStyles.imageGameIB}>
-                                        </ImageBackground>
-                                    </TouchableHighlight>
-                                </View>
-                                <View style={[gameStyles.card, { marginTop: 5 }]}>
-                                    <TouchableHighlight onPress={() => props.navigation.navigate('game', { idGame: popularGames[0]._id })}>
-                                        <ImageBackground source={{ uri: popularGames[2].imageBanner }} style={gameStyles.imageGameIB}>
-                                        </ImageBackground>
-                                    </TouchableHighlight>
+                                <View style={{flexDirection:'row'}}>
+                                    <View style={[gameStyles.card, { marginTop: 5, backgroundColor: '#061320' }]}>
+                                        <TouchableHighlight onPress={() => props.navigation.navigate('game', { idGame: popularGames[1]._id })}>
+                                            <ImageBackground source={{ uri: popularGames[1].imageBanner }} style={gameStyles.imageGameIB}>
+                                            </ImageBackground>
+                                        </TouchableHighlight>
+                                    </View>
+                                    <View style={[gameStyles.card, { marginTop: 5 }]}>
+                                        <TouchableHighlight onPress={() => props.navigation.navigate('game', { idGame: popularGames[0]._id })}>
+                                            <ImageBackground source={{ uri: popularGames[2].imageBanner }} style={gameStyles.imageGameIB}>
+                                            </ImageBackground>
+                                        </TouchableHighlight>
+                                    </View>
                                 </View>
                             </View> : <ActivityIndicator />}
                         {/*--------------------- Segundo layout ------------------*/}
@@ -99,9 +106,9 @@ const GameStore = (props) => {
                                 {retroGames
                                     ? retroGames.map(game => {
                                         return (
-                                            <View key={game._id} style={[gameStyles.card, { marginTop: 5 }]}>
+                                            <View key={game._id} style={[gameStyles.card, { marginTop: 5, width:350 }]}>
                                                 <TouchableHighlight onPress={() => props.navigation.navigate('game', { idGame: game._id })}>
-                                                    <ImageBackground source={{ uri: game.imageBanner }} style={gameStyles.imageGameIB}>
+                                                    <ImageBackground source={{ uri: game.imageBanner }} style={[gameStyles.imageGameIB, {width:'100%'}]}>
                                                         <Text style={gameStyles.titleCard}>{game.title}</Text>
                                                     </ImageBackground>
                                                 </TouchableHighlight>
@@ -131,6 +138,7 @@ const mapStateToProps = (state) => {
     return {
         allGames: state.gamesReducer.allGames,
         preLoader: state.gamesReducer.preLoader,
+        navigationRedux: state.navigationReducer.navigationRedux
     }
 }
 const mapDispatchToProps = {
