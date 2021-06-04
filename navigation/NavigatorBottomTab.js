@@ -77,10 +77,7 @@ const BottomTabs = () => {
    return (
    <Tab.Navigator tabBar={props => <BottomTabView {...props} />}>
         <Tab.Screen name="home" component={Index} />
-        <Tab.Screen name="signOptions" component={SignOptions}/> 
-        <Tab.Screen name="gameStore" component={GameStore}/> 
-        <Tab.Screen name="gameAll" component={GamesAll}/> 
-        <Tab.Screen name="game" component={Game}/> 
+        <Tab.Screen name="signOptions" component={SignOptions}/>  
     </Tab.Navigator>
     )
 }

@@ -7,7 +7,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import gameStyles from '../../styles/gameStyles';
 import { Button } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Icon } from 'react-native-elements'
 import { Image } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 const Game = (props) => {
@@ -34,15 +34,15 @@ const Game = (props) => {
                     <View style={{ alignItems: 'center', padding: 8 }}>
                         <View style={{ width: wp('80%'), borderColor: 'white', borderWidth: 1, borderRadius: 10 }}>
                             <View style={{ padding: 5, flexDirection: 'row' }}>
-                                <Icon name="cart" size={30} color="#fff" />
+                            <Icon name='shopping-bag' type='font-awesome-5' color='white' />
                                 {game.discount > 0
                                     ? (
                                         <>
-                                            <Text style={{ fontSize: hp('3%'), color: 'white', marginLeft: 5, marginRight: 5 }}>${game.price - ((game.price * game.discount) / 100)}</Text>
+                                            <Text style={{ fontSize: hp('3%'), color: 'white', marginLeft: 10, marginRight: 5 }}>${game.price - ((game.price * game.discount) / 100)}</Text>
                                             <Text style={{ fontSize: hp('3%'), color: 'rgba(223, 217, 217, 0.578)', textDecorationLine: 'line-through', marginLeft: 5, marginRight: 5 }}>${game.price}</Text>
                                         </>
                                     )
-                                    : (<Text style={{ fontSize: hp('3%'), color: 'white', marginLeft: 5, marginRight: 5 }}>${game.price}</Text>)
+                                    : (<Text style={{ fontSize: hp('3%'), color: 'white', marginLeft: 10, marginRight: 5 }}>${game.price}</Text>)
 
                                 }
                             </View>
