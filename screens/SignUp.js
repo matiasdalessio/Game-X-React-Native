@@ -9,7 +9,7 @@ import { Tile, Button } from 'react-native-elements';
 const SignUp = ()=>{
 
     return (
-        <View>
+        <View style={{backgroundColor:'black',width:wp('100%'),height:hp('100%')}}>
             
         </View>
     )

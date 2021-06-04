@@ -1,5 +1,5 @@
 import axios from "axios"
-import swal from 'sweetalert'
+// import console.log from 'sweetalert'
 
 const userActions = {
     logUser: (userInfo) => {
@@ -16,7 +16,7 @@ const userActions = {
                 })
                 return `Welcome back, ${respuesta.data.respuesta.userName}!`
             }catch(error) {
-                return swal("Failed to try to connect with server", "Please try again in a few minutes", "error")
+                return console.log("Failed to try to connect with server", "Please try again in a few minutes", "error")
             } 
         }
     },
@@ -34,7 +34,7 @@ const userActions = {
                 })
                 return `Welcome ${respuesta.data.respuesta.userName}!`               
             }catch(error) {
-                return swal("Failed to try to connect with server", "Please try again in a few minutes", "error")
+                return console.log("Failed to try to connect with server", "Please try again in a few minutes", "error")
             } 
         }
     },
@@ -52,9 +52,9 @@ const userActions = {
                 }})
             } catch(error) {
                 if (!error.response) {
-                    return swal("Failed to try to connect with server", "Please try again in a few minutes", "error")
+                    return console.log("Failed to try to connect with server", "Please try again in a few minutes", "error")
                 } else if (error.response.status && error.response.status > 399 && error.response.status < 499) {
-                    swal("Invalid Token", "Please Log in again", "error")
+                    console.log("Invalid Token", "Please Log in again", "error")
                     dispatch({type: 'LOG_OUT', payload: null})
                 } 
             }           
@@ -74,7 +74,7 @@ const userActions = {
                     return respuesta.data.respuesta.userName
                 }
             } catch(error) {
-                return swal("Failed to try to connect with server", "Please try again in a few minutes", "error")
+                return console.log("Failed to try to connect with server", "Please try again in a few minutes", "error")
             }           
         }
     },
@@ -127,7 +127,7 @@ const userActions = {
                 })
                 return response.data.response               
             }catch(error) {
-                return swal("Failed to try to connect with server", "Please try again in a few minutes", "error")
+                return console.log("Failed to try to connect with server", "Please try again in a few minutes", "error")
             } 
         }
     }, 
@@ -141,6 +141,11 @@ const userActions = {
             }
         }
     }, 
+    loadNavigation: (navigation)=>{
+        return (dispatch,getState)=>{
+            dispatch({type:'LOAD_NAVIGATION', payload:navigation})
+        }
+    }
 }
 
 export default userActions

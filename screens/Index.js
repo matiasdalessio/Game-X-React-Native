@@ -1,51 +1,35 @@
 import React, { useEffect } from 'react'
-import {View,StyleSheet, ScrollView, Text, ImageBackground, Image, TouchableOpacity} from 'react-native'
+import {View,StyleSheet, Text, ImageBackground, Image, TouchableOpacity} from 'react-native'
 import { connect } from 'react-redux';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
   } from 'react-native-responsive-screen';
-import { Tile, Button } from 'react-native-elements';
-
+import FabPortal from '../components/FabPortal'
+import userActions from '../redux/actions/userActions';
 
 const Index = (props)=>{
+    // console.log(props)
     useEffect(()=>{
-            // props.addListener('focus',)
+        if(props.loadNavigation && props.navigation){
+            props.loadNavigation(props.navigation)   
+            console.log('envie la action')
+        }
     })
-    console.log(props)
         return (<>
-                <View style={[styles.View]}> 
-                <ImageBackground source={require('../assets/fondo.png')} style={styles.tileStyle}>
-                    <TouchableOpacity style={styles.logo} activeOpacity={.5} onPress={()=>console.log("hola")}>
-                        <Image source={require('../assets/logoGif.gif')} style={styles.logo}/>
-                    </TouchableOpacity>
+                <View style={[styles.View,{position:'relative'}]}> 
+                <ImageBackground source={require('../assets/fondo.png')} style={styles.firstBgStyle}>
                     <Text style={styles.titleStyleFirstView}>Dive in Game-X-State</Text>
                 </ImageBackground>
-                  {/* <Tile
-                        style={styles.tileStyle}
-                        activeOpacity={1}
-                        imageSrc={require('../assets/fondo.png')}
-                        title="Dive in Game-X-State"
-                        titleStyle={styles.titleStyleFirstView}
-                        featured
-                        titleNumberOfLines={2}
-                        height={hp('55%')}
-                    /> */}
-                    
-                    <Tile
-                        imageSrc={require('../assets/fondoRobot.jpg')}
-                        activeOpacity={.9}
-                        height={hp('45%')}
-                        title="GET STARTED!"
-                        featured
-                        titleStyle={styles.titleStyle}
-                        overlayContainerStyle={styles.contentViewStylesSecondView}
-                        onPress={()=>props.navigation.navigate('signOptions')}
-                    />
-                  
+                <ImageBackground source={require('../assets/fondoRobot.jpg')} style={styles.secondBgStyle}>
+                    <TouchableOpacity style={styles.getStarted} activeOpacity={.5} onPress={()=>console.log("START")}>
+                        <Text style={styles.getStartedText}>
+                            GET STARTED!
+                        </Text>
+                    </TouchableOpacity>
+                </ImageBackground>
+                    <FabPortal />
             </View>
-               
-
             </>
     )   
         }
@@ -56,35 +40,38 @@ const styles = StyleSheet.create({
        width:wp('100%'),
        height:hp('100%)')
      },
-     logo:{
-         width:wp('15%'),
-         height:wp('15%'),
+     getStartedText:{
+        width:wp('65%'),
+        fontSize:wp('8%'),
+        borderRadius:120,
+        borderWidth:wp('1%'),
+        borderColor:'white',
+        padding:wp('1.5%'),
+        backgroundColor:'rgba(0,150,120,0.7)',
+        color:'rgba(255,255,255,0.9)',
+        textAlignVertical:'center',
+        textAlign:'center',
      },
-     titleStyle:{
-         fontSize:wp('8%'),
-         borderRadius:120,
-         borderWidth:wp('1%'),
-        //  borderStyle:'dashed',
-         borderColor:'white',
-         padding:wp('3%'),
-         backgroundColor:'rgba(0,150,120,0.7)',
-         color:'rgba(255,255,255,0.9)',
-         textAlignVertical:'center',
-         transform:[{translateY:hp('2.5%')},{translateX:wp('0%')}],
-     },
-     tileStyle:{
+     firstBgStyle:{
          borderBottomWidth:3,
          borderStyle:'solid',
          borderColor:'white',
          height:hp('55%'),
          position:'relative'
      },
-     contentViewStylesSecondView:{
-         justifyContent:'flex-end',
-        },
+     secondBgStyle:{
+         borderBottomWidth:3,
+         borderStyle:'solid',
+         borderColor:'white',
+         height:hp('45%'),
+         display:'flex',
+         flexDirection:'row',
+         justifyContent:'center',
+         alignItems:'flex-end'
+        //  position:'relative'
+     },
     titleStyleFirstView:{
         width:wp('50%'),
-        // transform:[{translateY:hp('21%')},{translateX:wp('50%')}],
         fontSize:wp('7%'),
         textAlign:'center',
         color:'white',
@@ -92,18 +79,21 @@ const styles = StyleSheet.create({
         top:hp('21%'),
         left:wp('50%')
     },
-
+    getStarted:{
+        marginBottom:'35%'
+    },
+   
 })
 
 const mapStateToProps = state =>{
     return{
-        // user : state.authReducer.user
+        // 
     }
 }
 
 const mapDispatchToProps = {
-    // getAllCitiesReference: citiesActions.getAllCities,
-    
-  };
+      loadNavigation: userActions.loadNavigation
+}  
+
 
 export default connect(mapStateToProps,mapDispatchToProps)(Index)

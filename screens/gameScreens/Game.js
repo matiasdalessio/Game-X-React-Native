@@ -14,8 +14,8 @@ const Game = (props) => {
     let imageBanner = { uri: 'https://image.api.playstation.com/cdn/UP0001/CUSA05904_00/IKYAgcRh0k3IOklJSDoNBTk5t5MSm7KE.png' }
     const [game, setGame] = useState(null)
     const [view, setView] = useState({ show: false, textBtn: 'View More' })
-    console.log(props.route.params);
-    console.log(props.allGames);
+    // console.log(props.route.params);
+    // console.log(props.allGames);
     useEffect(() => {
         let gameDetails = props.allGames.find(game => game._id === props.route.params.idGame)
         setGame(gameDetails)

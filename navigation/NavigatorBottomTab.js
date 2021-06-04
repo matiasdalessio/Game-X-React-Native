@@ -1,87 +1,133 @@
-import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Index from '../screens/Index';
-import SignOptions from '../screens/SignOptions';
-import GameStore from '../screens/gameScreens/GameStore';
+import React from "react";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { FontAwesome5 } from "@expo/vector-icons";
+import SignUp from "../screens/SignUp";
+import SignIn from "../screens/SignIn";
+import SignOptions from "../screens/SignOptions";
+import Index from "../screens/Index";
+import GameStore from "../screens/gameScreens/GameStore";
 import GamesAll from '../screens/gameScreens/GamesAll';
 import Game from '../screens/gameScreens/Game';
-import Store from '../screens/Store';
+import { Icon } from "react-native-elements";
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp
+  } from 'react-native-responsive-screen';
+
 const Tab = createBottomTabNavigator();
 
-const BottomTabs = () => {
 
+const TabNavigator = ()=>{
 
-
-
-    const BottomTabView = ({ state, descriptors, navigation }) => {
-      const focusedOptions = descriptors[state.routes[state.index].key].options;
-        console.log(focusedOptions)
-      if (focusedOptions.tabBarVisible === false) {
-        return null;
+    const MiddleIcon = ({ navigation }) => {
+        return (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('store')}
+            style={styles.container}>
+                <Icon  onPress={() => navigation.navigate('store')} name="shopping-outline" type="material-community" color="black" size={30}/>
+          </TouchableOpacity>
+        );
+      };
+      
+      const SignInIcon = ()=>{
+        return <View style={{width:0,height:0}} />
       }
-    
+
+
+      const Navigation = (props)=>{
+          return(
+          <View style={styles.tabBar}>
+                <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("home")}>
+                    <Icon name="home-outline" type="material-community" size={42} />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.container} activeOpacity={.8} onPress={()=> props.navigation.navigate("store")}>
+                    <Icon  name="shopping-outline" type="material-community" color="black" size={30}/>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("signOptions")}>
+                    <Icon name="account-outline" type="material-community" size={42} />
+                </TouchableOpacity>              
+            </View>
+          )
+
+      }
+
+
       return (
-        <View style={{ flexDirection: 'row' }}>
-          {state.routes.map((route, index) => {
-            const { options } = descriptors[route.key];
-            const label =
-              options.tabBarLabel !== undefined
-                ? options.tabBarLabel
-                : options.title !== undefined
-                ? options.title
-                : route.name;
-    
-            const isFocused = state.index === index;
-    
-            const onPress = () => {
-              const event = navigation.emit({
-                type: 'tabPress',
-                target: route.key,
-                canPreventDefault: true,
-              });
-    
-              if (!isFocused && !event.defaultPrevented) {
-                navigation.navigate(route.name);
-              }
-            };
-    
-            const onLongPress = () => {
-              navigation.emit({
-                type: 'tabLongPress',
-                target: route.key,
-              });
-            };
-    
-            return (
-              <TouchableOpacity
-                key={index}
-                accessibilityRole="button"
-                accessibilityState={isFocused ? { selected: true } : {}}
-                accessibilityLabel={options.tabBarAccessibilityLabel}
-                testID={options.tabBarTestID}
-                onPress={onPress}
-                onLongPress={onLongPress}
-                style={{ flex: 1 }}
-              >
-                <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
-                  {label}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      );
-    }
-    
-    
-   return (
-   <Tab.Navigator tabBar={props => <BottomTabView {...props} />}>
-        <Tab.Screen name="home" component={Index} />
-        <Tab.Screen name="signOptions" component={SignOptions}/> 
-        <Tab.Screen name="store" component={Store}/> 
-    </Tab.Navigator>
+        <Tab.Navigator tabBar={props=><Navigation {...props}/> } >
+            <Tab.Screen name="home" component={Index}/>
+
+             <Tab.Screen name="store" component={GameStore}/> 
+
+            <Tab.Screen name="signUp" component={SignUp}/> 
+
+            <Tab.Screen name="signIn" component={SignIn}/> 
+
+             <Tab.Screen name="signOptions" component={SignIn}/>
+
+            <Tab.Screen name="gameAll" component={GamesAll}/>
+
+            <Tab.Screen name="game" component={Game}/>
+
+        </Tab.Navigator>
     )
 }
 
-export default BottomTabs
+
+const styles = StyleSheet.create({
+    centerIcon:{
+        transform:[{translateY:hp('0%')}],
+        // position:'absolute'
+    },
+    container: {
+        position: 'absolute',
+        top: wp('-10%'),
+        left:wp('40%'),
+        height: wp('20%'),
+        width: wp('20%'),
+        borderRadius: wp('20%'),
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0,
+        shadowRadius: 4.65,
+        elevation: 7,
+        flex: 1,
+        zIndex:100
+    },
+    imageContainer: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        width: 30,
+        height: 30,
+    },  
+    tabBar:{
+        width:wp('100%'),
+        height:hp('6.5%'),
+        position:'relative',
+        flexDirection:'row',
+        justifyContent:'space-around',
+        overflow:'visible'
+        // backgroundColor:'red',
+    },
+    middleIcon:{
+        padding:20,
+        transform:[{translateY:hp('-2%')}],
+        backgroundColor:'red',
+        borderRadius:wp('100%'),
+    }
+})
+
+
+export default TabNavigator

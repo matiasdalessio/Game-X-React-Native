@@ -9,7 +9,7 @@ import { Tile, Button } from 'react-native-elements';
 const SignOptions = ()=>{
 
     return (
-        <View>
+        <View style={{backgroundColor:'green',width:wp('100%'),height:hp('100%')}}>
             
         </View>
     )
