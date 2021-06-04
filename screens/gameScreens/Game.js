@@ -33,7 +33,7 @@ const Game = (props) => {
                     </View>
                     <View style={{ alignItems: 'center', padding: 8 }}>
                         <View style={{ width: wp('80%'), borderColor: 'white', borderWidth: 1, borderRadius: 10 }}>
-                            <View style={{ padding: 5, flexDirection: 'row' }}>
+                            <View style={{ padding: 5, flexDirection: 'row', alignItems:'center' }}>
                             <Icon name='shopping-bag' type='font-awesome-5' color='white' />
                                 {game.discount > 0
                                     ? (
