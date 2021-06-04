@@ -33,12 +33,12 @@ const Game = (props) => {
                     </View>
                     <View style={{ alignItems: 'center', padding: 8 }}>
                         <View style={{ width: wp('80%'), borderColor: 'white', borderWidth: 1, borderRadius: 10 }}>
-                            <View style={{ padding: 5, flexDirection: 'row', alignItems:'center' }}>
-                            <Icon name='shopping-bag' type='font-awesome-5' color='white' />
+                            <View style={{ padding: 5, flexDirection: 'row', alignItems: 'center' }}>
+                                <Icon name='shopping-bag' type='font-awesome-5' color='white' />
                                 {game.discount > 0
                                     ? (
                                         <>
-                                            <Text style={{ fontSize: hp('3%'), color: 'white', marginLeft: 10, marginRight: 5 }}>${game.price - ((game.price * game.discount) / 100)}</Text>
+                                            <Text style={{ fontSize: hp('3%'), color: 'white', marginLeft: 10, marginRight: 5 }}>${Math.ceil(game.price - ((game.price * game.discount) / 100))}</Text>
                                             <Text style={{ fontSize: hp('3%'), color: 'rgba(223, 217, 217, 0.578)', textDecorationLine: 'line-through', marginLeft: 5, marginRight: 5 }}>${game.price}</Text>
                                         </>
                                     )
@@ -100,9 +100,13 @@ const Game = (props) => {
                             </View>
                         </View>
                     </View>
+                    <View style={{ padding: hp('2%'), paddingBottom:hp('5%') }}>
+                        <Button color="white" mode="contained"  onPress={() => props.navigation.navigate('store')}>Go To Games</Button>
+                    </View>
                 </ScrollView>
                 : <ActivityIndicator />
             }
+
         </>
     );
 }

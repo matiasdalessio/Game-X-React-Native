@@ -27,8 +27,8 @@ const gameStyles = StyleSheet.create({
         resizeMode: 'cover'
     },
     imageGameIB: {
-        width: 180,
-        height: 250,
+        width: wp('44%'),
+        height: hp('35%'),
         justifyContent:'flex-end',
         resizeMode: 'cover'
     },
@@ -51,8 +51,8 @@ const gameStyles = StyleSheet.create({
     }
     ,
     card: {
-        width: 180,
-        height: 250,
+        width: wp('44%'),
+        height: hp('35%'),
         margin: 10,
         borderRadius: 5,
         overflow: 'hidden',
@@ -92,7 +92,7 @@ const gameStyles = StyleSheet.create({
     },
     containerGame:{
         width: wp('100%'),
-        height: hp('60%')
+        height: hp('70%')
     }
     
 });
