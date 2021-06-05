@@ -47,7 +47,7 @@ const GameStore = (props) => {
                 </View>)
                 : (
                     <ScrollView style={{ backgroundColor: '#061320' }}>
-                        <ImageBackground source={imageBanner} style={[gameStyles.container, { alignItems: 'center', justifyContent: 'center', margin: 0, height: hp('45%') }]}>
+                        <ImageBackground source={imageBanner} style={[gameStyles.container, { alignItems: 'center', justifyContent: 'center', margin: 0, height: hp('40%'),marginBottom:hp('2.5%')}]}>
                             <Text style={gameStyles.titleMain}>State of Play</Text>
                             <TextInput style={gameStyles.inputSearch} placeholder="Search Games" theme={{ colors: { primary: '#0BC6C3' } }} mode="flat" selectionColor="black" underlineColor="#0BC6C3" right={<TextInput.Icon name="magnify" size={40} />} onChangeText={(e) => props.filterGames(e)} />
                         </ImageBackground>
@@ -67,7 +67,9 @@ const GameStore = (props) => {
                                 : <ActivityIndicator />
                             }
                         </View>
-                        <Button color="white" mode="contained" style={{ margin: 15 }} onPress={viewInfo}>{props.gamesFiltered.length >= 76 ? 'See Less' : 'See More'}</Button>
+                        {props.gamesFiltered.length ? <Button color="white" mode="contained" style={{ margin: 15,marginBottom:hp('7.5%')  }} onPress={viewInfo}>{props.gamesFiltered.length >= 76 ? 'See Less' : 'See More'}</Button>
+                        : null
+                        }
                     </ScrollView>
                 )
             }

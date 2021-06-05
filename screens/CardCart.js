@@ -24,11 +24,15 @@ const CardCart = (props) => {
                 </View>
             </View>
             <View>
-                <Button color="rgb(87, 202, 87)" dark={true} mode="contained" onPress={() => props.navigation.navigate('store')}>+</Button>
+                <Button color="rgb(87, 202, 87)" dark={true} mode="contained" onPress={() => props.navigation.navigate('storeMain')}>+
+                </Button>
                 <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-                    <Text>2</Text>
+                    <Text>
+                        2
+                    </Text>
                 </View>
-                <Button color="rgb(87, 202, 87)" dark={true} mode="contained" onPress={() => props.navigation.navigate('store')}>-</Button>
+                <Button color="rgb(87, 202, 87)" dark={true} mode="contained" onPress={() => props.navigation.navigate('storeMain')}>-
+                </Button>
             </View>
         </View>
     );

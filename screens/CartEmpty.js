@@ -21,7 +21,7 @@ const CartEmpty = (props) => {
             <View style={{alignItems:'center', flex:1, justifyContent:'center'}}>
                 <Icon name='cart-arrow-down' type='font-awesome-5' color='white' size={200} />
                 <Text style={{color:'white', fontSize:hp('3%')}}>Your Cart is Empty</Text>
-                <Button color="white" mode="contained" style={{ marginTop: 15 }} onPress={() => props.navigation.navigate('store')}>Go to Store</Button>
+                <Button color="white" mode="contained" style={{ marginTop: 15 }} onPress={() => props.navigation.navigate('storeMain')}>Go to Store</Button>
             </View>
         </View>
     );

@@ -8,6 +8,7 @@ import {Image} from 'react-native'
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import userActions from '../redux/actions/userActions';
+import { View } from 'react-native';
 
 const FabPortal = (props) => {
     const [state, setState] = React.useState({ open: false });
@@ -53,21 +54,27 @@ const FabPortal = (props) => {
           style={containerStyles}
           actions={[
           {
-              icon: 'star',
-              label: 'Wishlist',
-              color:'rgb(250,160,0)',
-              onPress: () => console.log('Pressed Wishlist'),
+              icon: ()=> <Icon name="microsoft-xbox-controller" type="material-community" size={25}/>,
+              label: 'Games',
+              // color:'rgb(250,160,0)',
+              onPress: () => props.navigationRedux.navigate('gameStore'),
               small: false,
           },
           {
-              icon: 'cart',
-              label: 'Cart',
-              onPress: () => console.log('Pressed Cart'),
+              icon:()=> <Icon name="sony-playstation" type="material-community" size={25}/>,
+              label: 'Consoles',
+              small: false,
+              onPress: () => props.navigationRedux.navigate('hardwareAll'),
           },
           {
-              icon:()=>{return <Icon name="logout" color="black"/>}, 
-              onPress: () => props.removeUserInfo()
-          },
+            icon:()=>{
+              return props.userLogged ? 
+              <Icon name="logout" color="black" /> 
+              : <View /> }, 
+              label: props.userLogged ? "Log Out" : null,
+            onPress: () => props.removeUserInfo(),
+            style:!props.userLogged && {opacity:0}
+          }
 
           //   {
           //     icon: 'star',
@@ -91,10 +98,12 @@ const FabPortal = (props) => {
 
 const mapStateToProps = state => {
     return{
+      userLogged : state.userReducer.userLogged,
+      navigationRedux: state.navigationReducer.navigationRedux
     }
   }
 const mapDispatchToProps = {
-  removeUserInfo: userActions.removeUserInfo
+     removeUserInfo: userActions.removeUserInfo
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(FabPortal)

@@ -1,38 +1,54 @@
 
 import React, { useEffect, useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 import { StyleSheet, Text, View , ImageBackground , Image , TouchableOpacity , ScrollView , StatusBar, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
 import hardwareActions from '../../redux/actions/hardwareActions'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const IndividualHarware = (props)=> {
     //const [IndividualHardware , setIndividualHardware] = useState([])
+    const [hardware, setHardware] = useState({})
     useEffect(()=>{
-        props.loadHardware()
+        setHardware(props.route.params.hardware)
+    },[props.route.params])
+
+    useEffect(()=>{
+        props.navigation.addListener('blur',()=>{
+            setHardware({})
+        })
+        return ()=>{
+            props.navigation.removeListener('blur')
+        }
     },[])
-    console.log("soy un elemento" , props.allHardware[0])
+
+    if(!hardware.productName){
+        return (<View style={{ backgroundColor: '#061320', width: wp('100%'), height: hp('100%'), alignItems: 'center', justifyContent: 'center' }}>
+                    <ActivityIndicator size={'large'} color='white' />
+                </View>)
+    }
   return (
     <>
-    <StatusBar barStyle="light-content" />
     <ScrollView>
         <View style={styles.container}>
-            <Text style={styles.titulo}> {props.allHardware[0].productName} </Text>
+            <Text style={styles.titulo}> {hardware.productName} </Text>
             <View style={styles.container}>
-                <Image style={styles.foto} source={{uri: props.allHardware[0].imageBanner}} />
+                <Image style={styles.foto} source={{uri: hardware.imageBanner}} />
             </View>
             <Text style={styles.tituloSecundario}>Caracteristicas:</Text>
-            <Text style={styles.tituloTerciario}>Brand: {props.allHardware[0].brand}</Text>
+            <Text style={styles.tituloTerciario}>Brand: {hardware.brand}</Text>
             <Text style={styles.tituloTerciario}>Features:</Text>
             {
-                props.allHardware[0].features.map((feature , index) =>{
+                hardware.features.map((feature , index) =>{
                     return(
                         <Text style={styles.text} key={index}>{feature}</Text>
                     )
                 })
             }
             <Text style={styles.tituloTerciario}>Description:</Text>
-            <Text style={styles.text}>{props.allHardware[0].description}</Text>
-            <Text style={styles.tituloTerciario}>Stock: {props.allHardware[0].stock}</Text>
-            <Text style={styles.tituloTerciario}>Price: ${props.allHardware[0].price}</Text>
+            <Text style={styles.text}>{hardware.description}</Text>
+            <Text style={styles.tituloTerciario}>Stock: {hardware.stock}</Text>
+            <Text style={styles.tituloTerciario}>Price: ${hardware.price}</Text>
             <TouchableOpacity style={styles.button}>
                 <Button title='Buy'/>
             </TouchableOpacity>

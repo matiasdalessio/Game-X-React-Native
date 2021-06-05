@@ -22,15 +22,15 @@ const GameStore = (props) => {
         <ImageBackground source={imageBannerMain} style={{ width: wp('100%'), height: hp('100%'), backgroundColor: '#061320', justifyContent: 'center' }}>
             <Text style={{ color: 'white', fontSize: hp('12%'), marginBottom: hp('3%') ,textAlign: 'center' }}>Store</Text>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around'}}>
-                <TouchableHighlight onPress={() => props.navigation.navigate('store')}>
+                <TouchableHighlight onPress={() => props.navigation.navigate('gameStore')}>
                     <View style={[styles.box, {borderWidth:1, borderColor:'white', borderRadius: 20 }]}>
                         <Text style={{ color: 'white', fontSize: hp('3%'), textAlign: 'center' }}>Games</Text>
                         <Image source={imageBanner} style={{ width: wp('45%'), height: hp('40%'), borderRadius: 20 }} />
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => props.navigation.navigate('store')}>
+                <TouchableHighlight onPress={() => props.navigation.navigate('hardwareAll')}>
                     <View style={[styles.box, {borderWidth:1, borderColor:'white', borderRadius: 20 }]}>
-                        <Text style={{ color: 'white', fontSize: hp('3%'), textAlign: 'center' }}>Hardwares</Text>
+                        <Text style={{ color: 'white', fontSize: hp('3%'), textAlign: 'center' }}>Consoles</Text>
                         <Image source={imageBanner2} style={{ width: wp('45%'), height: hp('40%'), borderRadius: 20 }} />
                     </View>
                 </TouchableHighlight>
