@@ -6,6 +6,7 @@ import { ScrollView } from 'react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import gameStyles from '../../styles/gameStyles';
+import cartActions from '../../redux/actions/cartActions';
 import { Button } from 'react-native-paper';
 import { Icon } from 'react-native-elements'
 import { Image } from 'react-native';
@@ -14,12 +15,23 @@ const Game = (props) => {
     let imageBanner = { uri: 'https://image.api.playstation.com/cdn/UP0001/CUSA05904_00/IKYAgcRh0k3IOklJSDoNBTk5t5MSm7KE.png' }
     const [game, setGame] = useState(null)
     const [view, setView] = useState({ show: false, textBtn: 'View More' })
-    // console.log(props.route.params);
-    // console.log(props.allGames);
     useEffect(() => {
-        let gameDetails = props.allGames.find(game => game._id === props.route.params.idGame)
-        setGame(gameDetails)
-    }, [props.route.params.idGame])
+        setGame(props.route.params.game)
+        if (props.allCart && game) {
+            let gameInCart = props.allCart.some(productCart => productCart._id === game._id) 
+            gameInCart ?setInCart(!inCart): setInCart(!inCart)
+        }
+    }, [props.route.params.game])
+    const [inCart, setInCart] = useState(false)
+    const addToCart = () => {
+        setInCart(!inCart)
+        props.addToCart(game)
+    }
+    const removeToCart = () => {
+        setInCart(!inCart)
+        props.deleteToCart(game._id)
+    }
+
     return (
         <>
             {game ?
@@ -46,9 +58,15 @@ const Game = (props) => {
 
                                 }
                             </View>
-                            <View style={{ padding: hp('2%'), flexDirection: 'row' }}>
-                                <Button icon="cart" color="white" mode="contained" style={{ marginRight: 15 }} >Add To Cart</Button>
-                            </View>
+                            {!inCart
+                                ? (<View style={{ padding: hp('2%'), flexDirection: 'row' }}>
+                                    <Button icon="cart" color="green" mode="contained" style={{ marginRight: 15 }} onPress={addToCart}>Add To Cart</Button>
+                                </View>)
+                                : (<View style={{ padding: hp('2%'), flexDirection: 'row' }}>
+                                    <Button icon="cart" color="red" mode="contained" style={{ marginRight: 15 }} onPress={removeToCart} >Remove To Cart</Button>
+                                </View>)
+                            }
+
                         </View>
                     </View>
                     <View style={{ padding: hp('2%') }}>
@@ -100,8 +118,8 @@ const Game = (props) => {
                             </View>
                         </View>
                     </View>
-                    <View style={{ padding: hp('2%'), paddingBottom:hp('5%') }}>
-                        <Button color="white" mode="contained"  onPress={() => props.navigation.navigate('store')}>Go To Games</Button>
+                    <View style={{ padding: hp('2%'), paddingBottom: hp('5%') }}>
+                        <Button color="white" mode="contained" onPress={() => props.navigation.navigate('store')}>Go To Games</Button>
                     </View>
                 </ScrollView>
                 : <ActivityIndicator />
@@ -114,7 +132,12 @@ const mapStateToProps = (state) => {
     return {
         allGames: state.gamesReducer.allGames,
         preLoader: state.gamesReducer.preLoader,
+        allCart: state.cartReducer.allCart
     }
 }
+const mapDispatchToProps = {
+    addToCart: cartActions.addToCart,
+    deleteToCart: cartActions.deleteToCart
+}
 
-export default connect(mapStateToProps, null)(Game)
+export default connect(mapStateToProps, mapDispatchToProps)(Game)

@@ -56,7 +56,7 @@ const GameStore = (props) => {
                                 ? props.gamesFiltered.map(game => {
                                     return (
                                         <View key={game._id} style={gameStyles.card}>
-                                            <TouchableHighlight onPress={() => props.navigation.navigate('game', { idGame: game._id })}>
+                                            <TouchableHighlight onPress={() => props.navigation.navigate('game', { game: game })}>
                                                 <ImageBackground source={{ uri: game.imageBanner }} style={gameStyles.imageGameIB}>
                                                     <Text style={gameStyles.titleCard}>{game.title}</Text>
                                                 </ImageBackground>
