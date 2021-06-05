@@ -20,7 +20,7 @@ const CardCart = (props) => {
                 </View>
                 <View style={{ justifyContent: 'space-between' }}>
                     <Text style={{ color: 'black', fontSize: hp('2%') }}>{productCart.title}</Text>
-                    <Text style={{ color: '#A3EEE9', fontSize: hp('3%'), textAlign: 'right' }}>${productCart.price}</Text>
+                    <Text style={{ color: '#A3EEE9', fontSize: hp('3%'), textAlign: 'right' }}>${Math.ceil(productCart.price - ((productCart.price * productCart.discount) / 100))}</Text>
                 </View>
             </View>
             <View>

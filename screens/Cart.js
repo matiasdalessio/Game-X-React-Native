@@ -13,13 +13,13 @@ import CartEmpty from './CartEmpty';
 import CardCart from './CardCart';
 const Cart = (props) => {
     if (props.allCart) {
-        let resultado = props.allCart.reduce((total, producto) => total + producto.precio, 0); //0 es el inicio
-    console.log( resultado );
+        let total = props.allCart.reduce((total, game) => total + Math.ceil(game.price - ((game.price * game.discount) / 100)), 0); //0 es el inicio
+    console.log( total );
     }
     let imageBanner = { uri: 'https://image.api.playstation.com/cdn/UP0001/CUSA05904_00/IKYAgcRh0k3IOklJSDoNBTk5t5MSm7KE.png' }
     return (
         <>
-            {(props.allCart.length === 0 || !props.allCart)
+            {(props.allCart.length === 0 || !props.allCart)  
                 ? (<CartEmpty navigation={props.navigation} />)
                 : (
                     props.allCart.map(productCart => {
@@ -29,10 +29,10 @@ const Cart = (props) => {
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: wp('90%'), paddingTop: hp('3%') }}>
                                         <Text style={{ color: 'white', fontSize: hp('3%') }}>Cart</Text>
                                         <Text style={{ color: 'white', fontSize: hp('3%') }}>Total</Text>
-                                    </View>
+                                    </View> 
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: wp('95%') }}>
                                         <Text style={{ color: 'white', fontSize: hp('3%') }}>{props.allCart.length} Items</Text>
-                                        <Text style={{ color: '#A3EEE9', fontSize: hp('3%') }}>$212014</Text>
+                                        <Text style={{ color: '#A3EEE9', fontSize: hp('3%') }}>${props.allCart && props.allCart.reduce((total, game) => total + Math.ceil(game.price - ((game.price * game.discount) / 100)), 0)}</Text>
                                     </View>
                                 </View>
                                 <ScrollView>
