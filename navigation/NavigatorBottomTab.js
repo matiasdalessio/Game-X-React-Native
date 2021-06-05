@@ -9,6 +9,8 @@ import Index from "../screens/Index";
 import GameStore from "../screens/gameScreens/GameStore";
 import GamesAll from '../screens/gameScreens/GamesAll';
 import Game from '../screens/gameScreens/Game';
+import Store from '../screens/Store';
+import Cart from '../screens/Cart';
 import { Icon } from "react-native-elements";
 import {
     widthPercentageToDP as wp,
@@ -52,9 +54,12 @@ const TabNavigator = (propsComponente)=>{
                     :<Image source={{uri:'https://game-x-arg.herokuapp.com'+propsComponente.userLogged.avatar}} style={styles.avatar}/>
                    }
                 </TouchableOpacity>              
-                <TouchableOpacity style={styles.container} activeOpacity={.8} onPress={()=> props.navigation.navigate("store")}>
+                <TouchableOpacity style={styles.container} activeOpacity={.8}  onPress={()=> props.navigation.navigate("storeMain")}>
                     <Icon  name="shopping-outline" type="material-community" color="black" size={30}/>
                 </TouchableOpacity>
+//                 <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("cart")}>
+//                     <Icon name="account-outline" type="material-community" size={42} />
+//                 </TouchableOpacity>
             </View>
             : null
           )
@@ -67,7 +72,9 @@ const TabNavigator = (propsComponente)=>{
 
             <Tab.Screen name="home" component={Index}/>
 
-             <Tab.Screen name="store" component={GameStore}/> 
+             <Tab.Screen name="store" component={GameStore}/>
+
+             <Tab.Screen name="storeMain" component={Store}/> 
 
             <Tab.Screen name="signOptions" component={SignOptions}/>
 
@@ -82,6 +89,8 @@ const TabNavigator = (propsComponente)=>{
             <Tab.Screen name="hardware" component={IndividualHardware}/>
 
             <Tab.Screen name="hardwareAll" component={HardwareStore}/>
+
+            <Tab.Screen name="cart" component={Cart}/>
 
         </Tab.Navigator>
     )
