@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
 import SignUp from "../screens/SignUp";
 import SignIn from "../screens/SignIn";
-import SignOptions from "../screens/SignOptions";
+// import SignOptions from "../screens/SignOptions";
 import Index from "../screens/Index";
 import GameStore from "../screens/gameScreens/GameStore";
 import GamesAll from '../screens/gameScreens/GamesAll';
@@ -16,7 +16,7 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
   } from 'react-native-responsive-screen';
-import HardwareStore from "../screens/hardwareScreens/HardwareStore";
+import HardwareStore from "../screens/hardwareScreens/HardwareAll";
 import IndividualHardware from "../screens/hardwareScreens/IndividualHardware";
 import { connect } from "react-redux";
 
@@ -44,8 +44,8 @@ const TabNavigator = (propsComponente)=>{
     const Navigation = (props)=>{
           return(show ?
           <View style={styles.tabBar}>
-                <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("home")}>
-                    <Icon name="home-outline" type="material-community" size={42} />
+                <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("storeMain")}>
+                    <Icon name="shopping-outline" type="material-community" size={38} />
                 </TouchableOpacity>
                     <Icon style={{opacity:0}} name="shopping-outline" type="material-community" color="black" size={42}/>
                 <TouchableOpacity style={{position:'relative'}} activeOpacity={.8} onPress={()=> !propsComponente.userLogged ? props.navigation.navigate("signIn"): null }>
@@ -54,12 +54,12 @@ const TabNavigator = (propsComponente)=>{
                     :<Image source={{uri:'https://game-x-arg.herokuapp.com'+propsComponente.userLogged.avatar}} style={styles.avatar}/>
                    }
                 </TouchableOpacity>              
-                <TouchableOpacity style={styles.container} activeOpacity={.8}  onPress={()=> props.navigation.navigate("storeMain")}>
-                    <Icon  name="shopping-outline" type="material-community" color="black" size={30}/>
+                <TouchableOpacity style={styles.container} activeOpacity={.8}  onPress={()=> props.navigation.navigate("home")}>
+                    <Icon  name="home-outline" type="material-community" color="black" size={42}/>
                 </TouchableOpacity>
-//                 <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("cart")}>
-//                     <Icon name="account-outline" type="material-community" size={42} />
-//                 </TouchableOpacity>
+                {/* <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("cart")}>
+                    <Icon name="account-outline" type="material-community" size={42} />
+                </TouchableOpacity> */}
             </View>
             : null
           )
@@ -72,11 +72,11 @@ const TabNavigator = (propsComponente)=>{
 
             <Tab.Screen name="home" component={Index}/>
 
-             <Tab.Screen name="store" component={GameStore}/>
+             <Tab.Screen name="gameStore" component={GameStore}/>
 
              <Tab.Screen name="storeMain" component={Store}/> 
 
-            <Tab.Screen name="signOptions" component={SignOptions}/>
+            {/* <Tab.Screen name="signOptions" component={SignOptions}/> */}
 
             <Tab.Screen name="signUp" component={SignUp}/>
 

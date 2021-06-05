@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import gamesActions from '../../redux/actions/gamesActions';
 import { ActivityIndicator, ImageBackground, ScrollView, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
@@ -9,11 +9,13 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import Icon from 'react-native-vector-icons/Ionicons';
 const myIcon = <Icon name="rocket" size={30} color="#900" />;
 const GameStore = (props) => {
-    
+    const theScrollView = useRef()
     useEffect(() => {
         props.loadGames()
         props.navigation.addListener('focus',()=>{
-
+            if(theScrollView.current){
+                theScrollView.current.scrollTo({x:0,y:0,animated:false})
+            }
         })
     }, [])
     let cities = [
@@ -37,7 +39,7 @@ const GameStore = (props) => {
                     <ActivityIndicator size={'large'} color='white' />
                 </View>)
                 : (
-                    <ScrollView>
+                    <ScrollView ref={theScrollView}>
                         <ImageBackground source={imageBanner} style={[gameStyles.container, { alignItems: 'center', justifyContent: 'center' }]}>
                             <Text style={gameStyles.titleMain}>Game Store</Text>
                         </ImageBackground>
@@ -96,7 +98,7 @@ const GameStore = (props) => {
                             </ScrollView>
                         </View>
                         {/*--------------------- Ultimo layout ------------------*/}
-                        <View style={[gameStyles.containerCardsTwo, { paddingTop: hp('3%'), paddingBottom: hp('3%') }]}>
+                        <View style={[gameStyles.containerCardsTwo, { paddingTop: hp('3%'), paddingBottom: hp('5%') }]}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: hp('2%') }}>
                                 <Text Icon="dog" style={gameStyles.titleSecundary}>Retro Games</Text>
                                 <Button color="white" mode="contained" style={{ marginRight: 15 }} onPress={() => props.navigation.navigate('gameAll')}>See All</Button>
