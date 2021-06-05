@@ -9,6 +9,8 @@ import Index from "../screens/Index";
 import GameStore from "../screens/gameScreens/GameStore";
 import GamesAll from '../screens/gameScreens/GamesAll';
 import Game from '../screens/gameScreens/Game';
+import Store from '../screens/Store';
+import Cart from '../screens/Cart';
 import { Icon } from "react-native-elements";
 import {
     widthPercentageToDP as wp,
@@ -41,10 +43,13 @@ const TabNavigator = ()=>{
                 <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("home")}>
                     <Icon name="home-outline" type="material-community" size={42} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.container} activeOpacity={.8} onPress={()=> props.navigation.navigate("store")}>
+                <TouchableOpacity style={styles.container} activeOpacity={.8} onPress={()=> props.navigation.navigate("storeMain")}>
                     <Icon  name="shopping-outline" type="material-community" color="black" size={30}/>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("signOptions")}>
+                    <Icon name="account-outline" type="material-community" size={42} />
+                </TouchableOpacity>              
+                <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("cart")}>
                     <Icon name="account-outline" type="material-community" size={42} />
                 </TouchableOpacity>              
             </View>
@@ -57,7 +62,9 @@ const TabNavigator = ()=>{
         <Tab.Navigator tabBar={props=><Navigation {...props}/> } >
             <Tab.Screen name="home" component={Index}/>
 
-             <Tab.Screen name="store" component={GameStore}/> 
+             <Tab.Screen name="store" component={GameStore}/>
+
+             <Tab.Screen name="storeMain" component={Store}/> 
 
             <Tab.Screen name="signUp" component={SignUp}/> 
 
@@ -68,6 +75,8 @@ const TabNavigator = ()=>{
             <Tab.Screen name="gameAll" component={GamesAll}/>
 
             <Tab.Screen name="game" component={Game}/>
+
+            <Tab.Screen name="cart" component={Cart}/>
 
         </Tab.Navigator>
     )
