@@ -43,6 +43,7 @@ const Game = (props) => {
                             <Text style={{ fontSize: hp('3%'), color: 'white' }}>{game.developer}</Text>
                         </View>
                     </View>
+                    {console.log(props.allCart)}
                     <View style={{ alignItems: 'center', padding: 8 }}>
                         <View style={{ width: wp('80%'), borderColor: 'white', borderWidth: 1, borderRadius: 10 }}>
                             <View style={{ padding: 5, flexDirection: 'row', alignItems: 'center' }}>
