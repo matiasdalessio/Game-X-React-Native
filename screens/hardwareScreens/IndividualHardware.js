@@ -1,13 +1,16 @@
 
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
-import { StyleSheet, Text, View , ImageBackground , Image , TouchableOpacity , ScrollView , StatusBar, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View , ImageBackground , Image , TouchableOpacity , ScrollView , StatusBar, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import hardwareActions from '../../redux/actions/hardwareActions'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Icon } from 'react-native-elements'
+import gameStyles from '../../styles/gameStyles';
+import { Button } from 'react-native-paper';
+import cartActions from '../../redux/actions/cartActions'
 
 const IndividualHarware = (props)=> {
-    //const [IndividualHardware , setIndividualHardware] = useState([])
     const [hardware, setHardware] = useState({})
     useEffect(()=>{
         setHardware(props.route.params.hardware)
@@ -21,39 +24,75 @@ const IndividualHarware = (props)=> {
             props.navigation.removeListener('blur')
         }
     },[])
-
+    const [inCart, setInCart] = useState(false)
+    const addToCart = () => {
+        setInCart(!inCart)
+        props.addToCart(hardware)
+    }
+    const removeToCart = () => {
+        setInCart(!inCart)
+        props.deleteToCart(hardware._id)
+    }
     if(!hardware.productName){
         return (<View style={{ backgroundColor: '#061320', width: wp('100%'), height: hp('100%'), alignItems: 'center', justifyContent: 'center' }}>
                     <ActivityIndicator size={'large'} color='white' />
                 </View>)
     }
+    
   return (
     <>
-    <ScrollView>
-        <View style={styles.container}>
-            <Text style={styles.titulo}> {hardware.productName} </Text>
-            <View style={styles.container}>
-                <Image style={styles.foto} source={{uri: hardware.imageBanner}} />
-            </View>
-            <Text style={styles.tituloSecundario}>Caracteristicas:</Text>
-            <Text style={styles.tituloTerciario}>Brand: {hardware.brand}</Text>
-            <Text style={styles.tituloTerciario}>Features:</Text>
-            {
-                hardware.features.map((feature , index) =>{
-                    return(
-                        <Text style={styles.text} key={index}>{feature}</Text>
-                    )
-                })
-            }
-            <Text style={styles.tituloTerciario}>Description:</Text>
-            <Text style={styles.text}>{hardware.description}</Text>
-            <Text style={styles.tituloTerciario}>Stock: {hardware.stock}</Text>
-            <Text style={styles.tituloTerciario}>Price: ${hardware.price}</Text>
-            <TouchableOpacity style={styles.button}>
-                <Button title='Buy'/>
-            </TouchableOpacity>
-        </View>
-    </ScrollView>
+    
+    <ScrollView style={{ backgroundColor: '#061320' }}>
+                    <ImageBackground source={{ uri: hardware.imageBanner }} style={[gameStyles.containerGame, { alignItems: 'center', justifyContent: 'center' }]}></ImageBackground>
+                    <View style={{ alignItems: 'center', padding: 8 }}>
+                        <View style={{ width: wp('80%') }}>
+                            <Text style={{ fontSize: hp('4%'), color: 'white' }}>{hardware.productName}</Text>
+                            <Text style={{ fontSize: hp('3%'), color: 'white' }}>Brand: {hardware.brand}</Text>
+                        </View>
+                    </View>
+                    <View style={{ alignItems: 'center', padding: 8 }}>
+                        <View style={{ width: wp('80%'), borderColor: 'white', borderWidth: 1, borderRadius: 10 }}>
+                            <View style={{ padding: 5, flexDirection: 'row', alignItems: 'center' }}>
+                                <Icon name='shopping-bag' type='font-awesome-5' color='white' />
+                                <Text style={{ fontSize: hp('3%'), color: 'white', marginLeft: 10, marginRight: 5 }}>${hardware.price}</Text>
+                                {console.log(props)}
+                            </View>
+                            
+                            {!inCart
+                                ? (<View style={{ padding: hp('2%'), flexDirection: 'row' }}>
+                                    <Button icon="cart" color="green" mode="contained" style={{ marginRight: 15 }} onPress={addToCart}>Add To Cart</Button>
+                                </View>)
+                                : (<View style={{ padding: hp('2%'), flexDirection: 'row' }}>
+                                    <Button icon="cart" color="red" mode="contained" style={{ marginRight: 15 }} onPress={removeToCart} >Remove To Cart</Button>
+                                </View>)
+                            }
+
+                        </View>
+                        <View style={{ padding: hp('4%'), flexDirection: 'column', alignItems: 'center' }}>
+                            <Text style={{ fontSize: hp('2%'), color: 'white', marginBottom: hp('1%') }}>Feature:</Text>
+                            <View style={{ flexDirection: 'column', paddingLeft: '1%' }}>
+                                {hardware.features.map(feature => {
+                                    return (
+                                        <View key={feature} style={{ padding: hp('1%'), marginLeft: hp('1%'), marginRight: hp('1%'), borderColor: 'white', borderWidth: 1, marginBottom: hp('2%') }}>
+                                            <Text style={{ color: 'white' }}>{feature}</Text>
+                                        </View>
+                                    )
+                                })}
+                            </View>                
+                        </View>
+                        <View style={{ padding: hp('2%'), flexDirection: 'column', alignItems: 'center' }}>
+                            <Text style={{ fontSize: hp('3%'), color: 'white', marginBottom: hp('1%') }}>Description:</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ padding: hp('1%'), marginLeft: hp('1%'), marginRight: hp('1%'), borderColor: 'white', borderWidth: 1 }}>
+                                    <Text style={{ color: 'white' }}>{hardware.description}</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{ padding: hp('2%'), paddingBottom: hp('5%') }}>
+                        <Button color="white" mode="contained" onPress={() => props.navigation.navigate('storeMain')}>Go To hardware</Button>
+                    </View>
+                </ScrollView>
     </>
   );
 }
@@ -109,7 +148,9 @@ const mapStateToProps = (state) =>{
 }
 
 const mapDispatchToProps = {
-    loadHardware: hardwareActions.loadHardwares
+    loadHardware: hardwareActions.loadHardwares,
+    addToCart: cartActions.addToCart,
+    deleteToCart: cartActions.deleteToCart
 }
 
 export default connect(mapStateToProps , mapDispatchToProps)(IndividualHarware)

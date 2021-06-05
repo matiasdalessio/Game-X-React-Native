@@ -6,10 +6,10 @@ import { Text, View } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import gameStyles from '../styles/gameStyles';
 import { Button } from 'react-native-paper';
-//
+
 const CardCart = (props) => {
     const { productCart, allCartLength } = props
-    console.log('hola cart');
+    const [cantidadAMostrar, setCantidadAMostrar]=useState(1)
 
     return (
         <View style={{ backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between', borderRadius: 15, margin: 'auto', marginLeft: wp('10%'), marginRight: wp('5%'), marginTop: hp('5%') }}>
@@ -24,15 +24,15 @@ const CardCart = (props) => {
                 </View>
             </View>
             <View>
-                <Button color="rgb(87, 202, 87)" dark={true} mode="contained" onPress={() => props.navigation.navigate('storeMain')}>+
-                </Button>
+                <Text color="rgb(87, 202, 87)" dark={true} mode="contained" onPress={setCantidadAMostrar(cantidadAMostrar+1)}>+
+                </Text>
                 <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
                     <Text>
-                        2
+                        {cantidadAMostrar}
                     </Text>
                 </View>
-                <Button color="rgb(87, 202, 87)" dark={true} mode="contained" onPress={() => props.navigation.navigate('storeMain')}>-
-                </Button>
+                <Text color="rgb(87, 202, 87)" dark={true} mode="contained" onPress={setCantidadAMostrar(cantidadAMostrar-1)}>-
+                </Text>
             </View>
         </View>
     );

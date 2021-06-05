@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import GamesAll from './screens/gameScreens/GamesAll';
 import App2 from './App2';
-
 const myStore = createStore(mainReducer, applyMiddleware(thunk))
 const App = () => {
   return (

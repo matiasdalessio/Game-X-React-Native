@@ -67,6 +67,12 @@ const FabPortal = (props) => {
               onPress: () => props.navigationRedux.navigate('hardwareAll'),
           },
           {
+            icon:()=> <Icon name="sony-playstation" type="material-community" size={25}/>,
+            label: 'Cart',
+            small: false,
+            onPress: () => props.navigationRedux.navigate('cart'),
+          },
+          {
             icon:()=>{
               return props.userLogged ? 
               <Icon name="logout" color="black" /> 
