@@ -4,7 +4,8 @@ const hardwareActions = {
     loadHardwares: () => {
         return async (dispatch, getState) => {
             try {
-                const response = await axios.get('http://localhost:4000/api/hardware')
+                console.log("estoy en action")
+                const response = await axios.get('https://game-x-arg.herokuapp.com/api/hardware')
                 if(response.data.success){
                     dispatch({type: 'LOAD_HARDWARES', payload: response.data.response})
                 }else{
@@ -14,6 +15,14 @@ const hardwareActions = {
                 console.log(error);
                 alert('error en hardware action')
             }        
+        }
+    },
+    getfilteredHardware: (input)=>{
+        return(dispatch , getState) =>{
+            dispatch({
+                type: 'GET_INPUT_VALUE',
+                payload: input
+            })
         }
     }
 }
