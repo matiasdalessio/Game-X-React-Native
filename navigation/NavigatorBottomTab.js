@@ -1,5 +1,5 @@
-import React from "react";
-import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, TouchableOpacity, Text, Keyboard, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
 import SignUp from "../screens/SignUp";
@@ -14,40 +14,49 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp
   } from 'react-native-responsive-screen';
+import HardwareStore from "../screens/hardwareScreens/HardwareStore";
+import IndividualHardware from "../screens/hardwareScreens/IndividualHardware";
+import { connect } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
 
-const TabNavigator = ()=>{
+const TabNavigator = (propsComponente)=>{
 
-    const MiddleIcon = ({ navigation }) => {
-        return (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('store')}
-            style={styles.container}>
-                <Icon  onPress={() => navigation.navigate('store')} name="shopping-outline" type="material-community" color="black" size={30}/>
-          </TouchableOpacity>
-        );
-      };
-      
-      const SignInIcon = ()=>{
-        return <View style={{width:0,height:0}} />
-      }
+    const [show, setShow] = useState(true)
 
 
-      const Navigation = (props)=>{
-          return(
+    useEffect(()=>{
+        Keyboard.addListener('keyboardDidShow',()=>{
+            setShow(false)
+        })
+        Keyboard.addListener('keyboardDidHide',()=>{
+            setShow(true)
+        })
+        return()=>{
+            Keyboard.removeAllListeners('keyboardDidShow')
+            Keyboard.removeAllListeners('keyboardDidHide')
+        }
+    },[])
+
+    const Navigation = (props)=>{
+          return(show ?
           <View style={styles.tabBar}>
                 <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("home")}>
                     <Icon name="home-outline" type="material-community" size={42} />
                 </TouchableOpacity>
+                    <Icon style={{opacity:0}} name="shopping-outline" type="material-community" color="black" size={42}/>
+                <TouchableOpacity style={{position:'relative'}} activeOpacity={.8} onPress={()=> !propsComponente.userLogged ? props.navigation.navigate("signIn"): null }>
+                   { !propsComponente.userLogged ? 
+                    <Icon name="account-outline" type="material-community" size={42} style={styles.avatar}/>
+                    :<Image source={{uri:'https://game-x-arg.herokuapp.com'+propsComponente.userLogged.avatar}} style={styles.avatar}/>
+                   }
+                </TouchableOpacity>              
                 <TouchableOpacity style={styles.container} activeOpacity={.8} onPress={()=> props.navigation.navigate("store")}>
                     <Icon  name="shopping-outline" type="material-community" color="black" size={30}/>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("signOptions")}>
-                    <Icon name="account-outline" type="material-community" size={42} />
-                </TouchableOpacity>              
             </View>
+            : null
           )
 
       }
@@ -55,19 +64,24 @@ const TabNavigator = ()=>{
 
       return (
         <Tab.Navigator tabBar={props=><Navigation {...props}/> } >
+
             <Tab.Screen name="home" component={Index}/>
 
              <Tab.Screen name="store" component={GameStore}/> 
 
-            <Tab.Screen name="signUp" component={SignUp}/> 
+            <Tab.Screen name="signOptions" component={SignOptions}/>
 
-            <Tab.Screen name="signIn" component={SignIn}/> 
+            <Tab.Screen name="signUp" component={SignUp}/>
 
-             <Tab.Screen name="signOptions" component={SignIn}/>
-
+            <Tab.Screen name="signIn" component={SignIn}/>
+          
             <Tab.Screen name="gameAll" component={GamesAll}/>
 
             <Tab.Screen name="game" component={Game}/>
+
+            <Tab.Screen name="hardware" component={IndividualHardware}/>
+
+            <Tab.Screen name="hardwareAll" component={HardwareStore}/>
 
         </Tab.Navigator>
     )
@@ -126,8 +140,18 @@ const styles = StyleSheet.create({
         transform:[{translateY:hp('-2%')}],
         backgroundColor:'red',
         borderRadius:wp('100%'),
+    },
+    avatar:{
+        width:wp('13%'),
+        height:wp('13%'),
+        borderRadius:wp('100%'),
     }
 })
 
+const mapStateToProps = state => {
+    return {
+        userLogged : state.userReducer.userLogged
+    }
+}
 
-export default TabNavigator
+export default connect(mapStateToProps)(TabNavigator)

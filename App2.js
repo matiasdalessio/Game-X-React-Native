@@ -9,11 +9,14 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import NavigatorBottomTab from './navigation/NavigatorBottomTab';
+import Toast from 'react-native-toast-message'
+
 const App2 = (props) => {
   return (
       <NavigationContainer>
         <StatusBar />
         <NavigatorBottomTab />
+        <Toast ref={(ref)=>Toast.setRef(ref)}/>
       </NavigationContainer>
   );
 }

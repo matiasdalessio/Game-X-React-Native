@@ -5,8 +5,11 @@ import {
     heightPercentageToDP as hp
   } from 'react-native-responsive-screen';
 import {Image} from 'react-native'
+import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
+import userActions from '../redux/actions/userActions';
 
-const FabPortal = () => {
+const FabPortal = (props) => {
     const [state, setState] = React.useState({ open: false });
   
     const onStateChange = ({ open }) => setState({ open });
@@ -41,50 +44,57 @@ const FabPortal = () => {
   }
 
     return (
-      <Provider>
-        <Portal>
-          <FAB.Group
-            open={open}
-            fabStyle={fabStyle}
-            icon={()=> <Image source={require('../assets/logoGif.gif')} style={logo}/>}
-            style={containerStyles}
-            actions={[
-                    {
-                        icon: 'star',
-                        label: 'Wishlist',
-                        color:'rgb(250,160,0)',
-                        onPress: () => console.log('Pressed Wishlist'),
-                        small: false,
-                    },
-                    {
-                        icon: 'cart',
-                        label: 'Cart',
-                        onPress: () => console.log('Pressed Cart'),
-                    },
-                    {
-                        icon: 'plus', 
-                        onPress: () => console.log('Pressed add')
-                    },
+    <Provider>
+      <Portal>
+        <FAB.Group
+          open={open}
+          fabStyle={fabStyle}
+          icon={()=> <Image source={require('../assets/logoGif.gif')} style={logo}/>}
+          style={containerStyles}
+          actions={[
+          {
+              icon: 'star',
+              label: 'Wishlist',
+              color:'rgb(250,160,0)',
+              onPress: () => console.log('Pressed Wishlist'),
+              small: false,
+          },
+          {
+              icon: 'cart',
+              label: 'Cart',
+              onPress: () => console.log('Pressed Cart'),
+          },
+          {
+              icon:()=>{return <Icon name="logout" color="black"/>}, 
+              onPress: () => props.removeUserInfo()
+          },
 
-            //   {
-            //     icon: 'star',
-            //     label: 'Star',
-            //     onPress: () => console.log('Pressed star'),
-            //   },
-              
-              
-            ]}
-            onStateChange={onStateChange}
-            onPress={() => {
-              if (open) {
-                // do something if the speed dial is open
-              }
-            }}
-          />
-        </Portal>
-      </Provider>
+          //   {
+          //     icon: 'star',
+          //     label: 'Star',
+          //     onPress: () => console.log('Pressed star'),
+          //   },
+            
+            
+          ]}
+          onStateChange={onStateChange}
+          onPress={() => {
+            if (open) {
+              // do something if the speed dial is open
+            }
+          }}
+        />
+      </Portal>
+    </Provider>
     );
   }
 
+const mapStateToProps = state => {
+    return{
+    }
+  }
+const mapDispatchToProps = {
+  removeUserInfo: userActions.removeUserInfo
+}
 
-export default FabPortal
+export default connect(mapStateToProps,mapDispatchToProps)(FabPortal)
