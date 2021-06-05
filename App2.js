@@ -14,7 +14,7 @@ import Toast from 'react-native-toast-message'
 const App2 = (props) => {
   return (
       <NavigationContainer>
-        <StatusBar />
+        {/* <StatusBar /> */}
         <NavigatorBottomTab />
         <Toast ref={(ref)=>Toast.setRef(ref)}/>
       </NavigationContainer>

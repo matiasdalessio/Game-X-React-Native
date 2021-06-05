@@ -10,6 +10,8 @@ import { connect } from 'react-redux';
 import userActions from '../redux/actions/userActions'
 import { Alert } from 'react-native';
 import Toast from 'react-native-toast-message'
+import * as Google from "expo-google-app-auth";
+
 
 const SignIn = (props)=>{
     const [user, setUser] = useState({userName:"",password:""})
@@ -88,24 +90,24 @@ const SignIn = (props)=>{
             onPress
         })
     }
-    const signIn = ()=>{
-        // Toast.show({
-        //     type: 'success | error | info',
-        //     position: 'top | bottom',
-        //     text1: 'Hello',
-        //     text2: 'This is some something 👋',
-        //     visibilityTime: 4000,
-        //     autoHide: true,
-        //     topOffset: 30,
-        //     bottomOffset: 40,
-        //     onShow: () => {},
-        //     onHide: () => {},
-        //     onPress: () => {}
-        // })
+    // Toast.show({
+    //     type: 'success | error | info',
+    //     position: 'top | bottom',
+    //     text1: 'Hello',
+    //     text2: 'This is some something 👋',
+    //     visibilityTime: 4000,
+    //     autoHide: true,
+    //     topOffset: 30,
+    //     bottomOffset: 40,
+    //     onShow: () => {},
+    //     onHide: () => {},
+    //     onPress: () => {}
+    // })
+    const signIn = (googleUser)=>{
+        let userInfo = googleUser ? googleUser : user
+        setLoading(true)
         const sendLogIn = async () => {
-            setLoading(true)
-            let userInfo = user
-            const respuesta = await props.logUser(user)
+            const respuesta = await props.logUser(userInfo)
             if (!respuesta) {
                 console.log(respuesta)
                 toastF('error','Error','Error trying to connect with server',2500,true)
@@ -122,6 +124,45 @@ const SignIn = (props)=>{
         }
             sendLogIn()
     }
+
+    // import React from "react";
+    // import { StyleSheet, View, Button } from "react-native";
+    
+    // const LoginScreen = ({ navigation }) => {
+      const signInAsync = async () => {
+        console.log("LoginScreen.js 6 | loggin in");
+        setLoading(true)
+        try {
+          const { type, user } = await Google.logInAsync({
+            // iosClientId: `<YOUR_IOS_CLIENT_ID>`,
+            androidClientId: `382714051375-l6ppnha19bouskqa43p1kt5n1m0b61hr.apps.googleusercontent.com`,
+          });
+    
+          if (type === "success") {
+            // Then you can use the Google REST API
+            console.log("LoginScreen.js 17 | success, navigating to profile");
+            // navigation.navigate("Profile", { user });
+            signIn({userName:user.email,password:"matias"+user.id,country:'null'})
+          }
+        } catch (error) {
+          console.log("LoginScreen.js 19 | error with login", error);
+        }
+      };
+    
+    //   return (
+    //     <View style={styles.container}>
+    //       <Button title="Login with Google" onPress={signInAsync} />
+    //     </View>
+    //   );
+    // };
+    
+    // export default LoginScreen;
+    
+    // const styles = StyleSheet.create({});
+
+
+
+
 
 
     return (
@@ -148,7 +189,7 @@ const SignIn = (props)=>{
                         </TouchableOpacity>
                     </View>
                     <View style={styles.otherSignInOptions}>
-                        <TouchableOpacity activeOpacity={.6} style={styles.signInOption}>
+                        <TouchableOpacity activeOpacity={.6} style={styles.signInOption} onPress={signInAsync}>
                             <Icon name="google-plus" type="material-community" color="#ec4e1d" size={40}/>
                             <Text style={styles.signInOptionText}>Sign in with Google</Text> 
                         </TouchableOpacity>
