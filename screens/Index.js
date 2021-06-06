@@ -57,8 +57,6 @@ const styles = StyleSheet.create({
   getStartedText: {
     width: wp("65%"),
     fontSize: wp("8%"),
-    top:hp("80%"),
-    left:wp("18%"),
     borderRadius: 120,
     borderWidth: wp("1%"),
     borderColor: "white",
@@ -98,7 +96,9 @@ const styles = StyleSheet.create({
     left: wp("25%"),
   },
   getStarted: {
-    marginBottom: "35%",
+    width: wp("65%"),
+    top:hp("80%"),
+    left:wp("18%"),
   },
 });
 
