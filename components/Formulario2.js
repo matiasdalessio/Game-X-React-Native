@@ -1,66 +1,84 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View , ImageBackground , Image , TouchableOpacity , ScrollView , StatusBar, TextInput, Button , Alert } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity, ScrollView, StatusBar, Alert } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Button, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 import axios from 'axios'
 
-const Formulario2 = () =>{
-    const [allHardware , setAllHarware] = useState([])
-    useEffect(()=>{
+const Formulario2 = (props) => {
+    const [allHardware, setAllHarware] = useState([])
+    const [buyerInfo, setBuyerInfo] = useState(null)
+    useEffect(() => {
+        setBuyerInfo(props.route.params.newSell)
         fetch('https://game-x-arg.herokuapp.com/api/hardware')
-        .then(datos => datos.json())
-        .then(respuesta => setAllHarware(respuesta.response))
-    },[])
-    let nameBuyer = "Nicolas"
-    let directionBuyer = "mitre 1495"
-    let contactNumber = "2994386053"
-    let creditCard = "5258 5515 7577 5747"
+            .then(datos => datos.json())
+            .then(respuesta => setAllHarware(respuesta.response))
+    }, [])
 
-    const buy = ()=>{
-        alert("compra satisfactoria")
+    const buy = () => {
+        Alert.alert("compra satisfactoria")
     }
-    const cancel = () =>{
-        alert("cancelado")
+    const cancel = () => {
+       Alert.alert(
+        "Cancel Purchase",
+        `Are you sure you want to cancel the purchase?`,
+        [
+            {text: 'YES', onPress: () => props.navigationRedux.navigate('storeMain') 
+            },
+            {text: 'NO'}
+        ]
+       )
     }
     return (
         <>
-        <StatusBar barStyle="light-content" />
-        <View style={styles.container}>
-            <Text style={styles.titulo}>This is your order Information</Text>
-            <Text style={styles.texto}>Product Name: {allHardware[0].productName}</Text>
-            <Text style={styles.texto}>Total price: {allHardware[0].price}</Text>
-            <Text style={styles.texto}>With your card finished in: {creditCard}</Text>
-            <Text style={styles.texto}>To deliver in: {directionBuyer}</Text>
-            <Text style={styles.texto}>Contact Number: {contactNumber}</Text>
-            <Text style={styles.texto}>This could only be recieved by {nameBuyer} or other person who validates his identity with ID and sign the delivery order.
-            if you agree with this terms , and all this information seems correct, please click the "Buy" button to finish the process</Text>
-            <TouchableOpacity onPress={buy}>
-                <Text style={styles.button}>Buy</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={cancel}>
-                <Text style={styles.button}>Cancel</Text>
-            </TouchableOpacity>
-        </View>
+            <StatusBar barStyle="light-content" />
+            {buyerInfo &&
+            (<View style={styles.container}>
+                <Text style={styles.titulo}>This is your order Information</Text>
+            <View style={{ paddingLeft: wp('7%'), paddingRight: wp('7%')}}>
+            <Text style={styles.texto}>This could only be recieved by {`${buyerInfo.firstName} ${buyerInfo.lastName}`} or other person who validates his identity with ID and sign the delivery order.</Text>
+                <Text style={styles.texto}>Product Name: Play 5</Text>
+                <Text style={styles.texto}>Total price: chorrocientos dolares</Text>
+                <Text style={styles.texto}>To deliver in: {buyerInfo.direction}</Text>
+                <Text style={styles.texto}>Contact Number: {buyerInfo.phone}</Text>
+                <Text style={styles.texto}>if you agree with this terms , and all this information seems correct, please click the "Finish Buy" button to finish the process</Text>
+                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                <Button color="green" mode="contained" style={{ marginRight: 15 }} onPress={buy} >Finish Buy</Button>
+                <Button color="red" mode="contained" style={{ marginRight: 15 }} onPress={cancel}>Cancel Buy</Button>
+                </View>
+            </View>
+        </View>)}
         </>
     )
 }
 const styles = StyleSheet.create({
-    titulo:{
+    titulo: {
         fontWeight: 'bold',
-        fontSize: 45,
+        fontSize: hp('4.5%'),
         marginTop: 10,
         marginBottom: 15,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: 'white'
     },
-    texto:{
-        fontSize: 20,
-        marginBottom: 20
+    texto: {
+        fontSize: hp('2.5%'),
+        marginBottom: 20,
+        color: 'white'
     },
-    container:{
-        flex: 1 , 
-        backgroundColor: '#39DD17'
+    container: {
+        width: wp('100%'),
+        height: hp('100%'),
+        backgroundColor: '#061320',
+        justifyContent:'center'
     },
-    button:{
+    button: {
         marginBottom: 10
     }
 })
-export default Formulario2
+const mapStateToProps = state => {
+    return {
+    navigationRedux: state.navigationReducer.navigationRedux
+    }
+    }
+    
+export default connect(mapStateToProps, null)(Formulario2)

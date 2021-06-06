@@ -12,41 +12,84 @@ import { ActivityIndicator } from 'react-native';
 import CartEmpty from './CartEmpty';
 import CardCart from './CardCart';
 const Cart = (props) => {
-    if (props.allCart) {
-        let total = props.allCart.reduce((total, game) => total + Math.ceil(game.price - ((game.price * game.discount) / 100)), 0); //0 es el inicio
-    console.log( total );
+    const [cart, setCart] = useState([])
+    useEffect(() => {
+        setCart(props.allCart)
+        
+    }, [props])
+
+    const [total, setTotal] = useState(0)
+    const arraySubTotales = []
+    console.log('me renderize');
+    cart.length && cart.map(art => arraySubTotales.push({ id: art._id, subtotal: art.discount ? (art.price - art.price * art.discount / 100) : art.price }))
+
+    const elProblema =()=>{
+        // arraySubTotales.map(articulo =>{
+        //     if (cart.some(art => art._id !== articulo.id) ) {
+        //          arraySubTotales.push({ id: art._id, subtotal: art.discount ? (art.price - art.price * art.discount / 100) : art.price })
+        //          return
+        //     }
+            
+        // })
+
+        cart.map(art =>{
+            console.log(art);
+            if (arraySubTotales.some(articulo => articulo.id !== art._id) ) {
+
+                arraySubTotales.push({ id: art._id, subtotal: art.discount ? (art.price - art.price * art.discount / 100) : art.price })
+                console.log('ifff');
+                return art
+            }
+            console.log('fuera del ifff');
+            return art
+        })
+    }
+    const sendSubTotal = (precioSub, idArt) => {
+        arraySubTotales.map(art => {
+            if (idArt === art.id) {
+                art.subtotal = precioSub
+                return art
+            }
+            return art
+        })
+        console.log(arraySubTotales);
+        var sumSubTotal = 0
+        arraySubTotales.map(art =>{
+            console.log('dentro del map');
+            sumSubTotal += art.subtotal
+            return null
+        })
+        setTotal(sumSubTotal)
+
     }
     
-    let imageBanner = { uri: 'https://image.api.playstation.com/cdn/UP0001/CUSA05904_00/IKYAgcRh0k3IOklJSDoNBTk5t5MSm7KE.png' }
+    console.log(total);
     return (
         <>
-            {(props.allCart.length === 0 || !props.allCart)  
+            {(cart.length == 0)
                 ? (<CartEmpty navigation={props.navigation} />)
                 : (
-                    props.allCart.map(productCart => {
-                        return (
-                            <View key={productCart._id} style={{ backgroundColor: '#061320', height: hp('100%') }}>
-                                <View style={{ alignItems: 'center' }}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: wp('90%'), paddingTop: hp('3%') }}>
-                                        <Text style={{ color: 'white', fontSize: hp('3%') }}>Cart</Text>
-                                        <Text style={{ color: 'white', fontSize: hp('3%') }}>Total</Text>
-                                    </View> 
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: wp('95%') }}>
-                                        <Text style={{ color: 'white', fontSize: hp('3%') }}>{props.allCart.length} Items</Text>
-                                        <Text style={{ color: '#A3EEE9', fontSize: hp('3%') }}>${props.allCart && props.allCart.reduce((total, game) => total + Math.ceil(game.price - ((game.price * game.discount) / 100)), 0)}</Text>
-                                    </View>
-                                </View>
-                                <ScrollView>
-                                    {props.allCart.map(productCart => {
-                                        return (<CardCart key={productCart._id} productCart={productCart} allCartLength={props.allCart.length} navigation={props.navigation} />)
-                                    })}
-                                </ScrollView>
-                                <View style={{ backgroundColor: 'white', paddingBottom: hp('6%') }}>
-                                    <Button color="rgb(87, 202, 87)" dark={true} mode="contained" style={{ marginTop: 15 }} onPress={() => props.navigation.navigate('store')}>Finish Buy</Button>
-                                </View>
+                    <View style={{ backgroundColor: '#061320', height: hp('100%') }}>
+                        <View style={{ alignItems: 'center' }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: wp('90%'), paddingTop: hp('3%') }}>
+                                <Text style={{ color: 'white', fontSize: hp('3%') }}>Cart</Text>
+                                <Text style={{ color: 'white', fontSize: hp('3%') }}>Total</Text>
                             </View>
-                        )
-                    })
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: wp('95%') }}>
+                                <Text style={{ color: 'white', fontSize: hp('3%') }}>{cart.length} Items</Text>
+                                <Text style={{ color: '#A3EEE9', fontSize: hp('3%') }}>${total.toFixed(0)}</Text>
+                            </View>
+                        </View>
+                        <ScrollView>
+                            {cart.map(productCart => {
+                                return (<CardCart key={productCart._id} productCart={productCart} sendSubTotal={sendSubTotal} />)
+                            })}
+                        </ScrollView>
+                        <View style={{ backgroundColor: 'white', paddingBottom: hp('6%'), flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Button color="rgb(87, 202, 87)" dark={true} mode="contained" style={{ marginTop: 15, marginLeft: 10 }} onPress={() => props.navigation.navigate('store')}>Finish Buy</Button>
+                            <Button color="#061320" dark={true} mode="contained" style={{ marginTop: 15, marginRight: 10 }} onPress={() => props.navigation.navigate('storeMain')}>Go to Store</Button>
+                        </View>
+                    </View>
                 )
             }
         </>
@@ -54,8 +97,6 @@ const Cart = (props) => {
 }
 const mapStateToProps = (state) => {
     return {
-        allGames: state.gamesReducer.allGames,
-        preLoader: state.gamesReducer.preLoader,
         allCart: state.cartReducer.allCart
     }
 }

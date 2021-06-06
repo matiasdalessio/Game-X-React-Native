@@ -37,7 +37,7 @@ const Index = (props) => {
           style={styles.secondBgStyle}
         >
           <TouchableOpacity
-            style={styles.getStarted}
+            style={styles.getStarted }
             activeOpacity={0.5}
             onPress={() =>
               !props.userLogged
