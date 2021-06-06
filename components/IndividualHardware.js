@@ -9,7 +9,7 @@ const IndividualHarware = (props)=> {
     useEffect(()=>{
         props.loadHardware()
     },[])
-    console.log("soy un elemento" , props.allHardware[0])
+    // console.log("soy un elemento" , props.allHardware[0])
   return (
     <>
     <StatusBar barStyle="light-content" />

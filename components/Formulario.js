@@ -22,7 +22,7 @@ const Formulario = ()=>{
             `la info a enviar es: firstName: ${newSell.firstName} , lastName: ${newSell.lastName} , cellphoneNumber: ${newSell.cellphoneNumber}`,
             [
                 {text: 'Si' , onPress: ()=>{
-                    console.log("soy newSell" , newSell)
+                    // console.log("soy newSell" , newSell)
                 }},
                 {text: 'No'}
             ]

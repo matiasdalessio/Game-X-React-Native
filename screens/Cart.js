@@ -11,10 +11,11 @@ import { Image } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import CartEmpty from './CartEmpty';
 import CardCart from './CardCart';
+
 const Cart = (props) => {
     if (props.allCart) {
         let total = props.allCart.reduce((total, game) => total + Math.ceil(game.price - ((game.price * game.discount) / 100)), 0); //0 es el inicio
-    console.log( total );
+        // console.log( total );
     }
     
     let imageBanner = { uri: 'https://image.api.playstation.com/cdn/UP0001/CUSA05904_00/IKYAgcRh0k3IOklJSDoNBTk5t5MSm7KE.png' }

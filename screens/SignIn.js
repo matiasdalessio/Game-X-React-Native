@@ -104,17 +104,16 @@ const SignIn = (props)=>{
     //     onPress: () => {}
     // })
     const signIn = (googleUser)=>{
+
         let userInfo = googleUser ? googleUser : user
         setLoading(true)
         const sendLogIn = async () => {
             const respuesta = await props.logUser(userInfo)
             if (!respuesta) {
-                console.log(respuesta)
                 toastF('error','Error','Error trying to connect with server',2500,true)
             } else if (respuesta.error) {
-                console.log("error")
                 setLoading(false)
-                toastF('error','Error','Username or password Incorrect',2500,true)
+                toastF('error','Error',respuesta.error,2500,true)
             } else {
                 toastF('success','Welcome','Welcome to Game-X',2500,true)
                 setLoading(false)
@@ -125,46 +124,23 @@ const SignIn = (props)=>{
             sendLogIn()
     }
 
-    // import React from "react";
-    // import { StyleSheet, View, Button } from "react-native";
-    
-    // const LoginScreen = ({ navigation }) => {
+
       const signInAsync = async () => {
-        console.log("LoginScreen.js 6 | loggin in");
         setLoading(true)
         try {
           const { type, user } = await Google.logInAsync({
-            // iosClientId: `<YOUR_IOS_CLIENT_ID>`,
             androidClientId: `382714051375-l6ppnha19bouskqa43p1kt5n1m0b61hr.apps.googleusercontent.com`,
           });
     
           if (type === "success") {
-            // Then you can use the Google REST API
-            console.log("LoginScreen.js 17 | success, navigating to profile");
-            // navigation.navigate("Profile", { user });
+            console.log(user)
             signIn({userName:user.email,password:"matias"+user.id,country:'null'})
           }
         } catch (error) {
-          console.log("LoginScreen.js 19 | error with login", error);
+          console.log("SignIn.js 142 | error with login", error);
         }
       };
     
-    //   return (
-    //     <View style={styles.container}>
-    //       <Button title="Login with Google" onPress={signInAsync} />
-    //     </View>
-    //   );
-    // };
-    
-    // export default LoginScreen;
-    
-    // const styles = StyleSheet.create({});
-
-
-
-
-
-
     return (
         <ScrollView>
             <ImageBackground source={require('../assets/stormDragon.jpg')} style={styles.fondo}>
@@ -184,7 +160,7 @@ const SignIn = (props)=>{
                             <Icon name="vpn-key" color="white" size={30}/> 
                             <TextInput style={styles.inputs} placeholder="password" secureTextEntry value={user.password} placeholderTextColor='rgba(255,255,255,.7)'  keyboardType="default" onChangeText={(e)=>readInput(e,"password")} />
                         </View>
-                        <TouchableOpacity activeOpacity={.5} style={styles.signInButton} onPress={signIn}>
+                        <TouchableOpacity activeOpacity={.5} style={styles.signInButton} onPress={()=>signIn()}>
                             <Text style={styles.signInButtonText}>Sign In</Text>
                         </TouchableOpacity>
                     </View>
@@ -221,7 +197,6 @@ const styles=StyleSheet.create({
     legend:{
         width:wp('100%'),
         height:wp('25%'),
-        // backgroundColor:'red',
         justifyContent:'flex-end'
     },
     legendText:{
@@ -233,7 +208,6 @@ const styles=StyleSheet.create({
     inputsContainer:{
         width:wp('100%'),
         height:hp('30%'),
-        // backgroundColor:'red',
         marginTop:hp('14%'),
         alignItems:'center',
         marginBottom:hp('2.5%')
@@ -322,7 +296,6 @@ const mapStateToProps = state => {
     }
     }
     const mapDispatchToProps = {
-    newUser: userActions.newUser,
     logUser: userActions.logUser
     }
     

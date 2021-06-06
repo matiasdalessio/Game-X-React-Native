@@ -55,7 +55,6 @@ const IndividualHarware = (props)=> {
                             <View style={{ padding: 5, flexDirection: 'row', alignItems: 'center' }}>
                                 <Icon name='shopping-bag' type='font-awesome-5' color='white' />
                                 <Text style={{ fontSize: hp('3%'), color: 'white', marginLeft: 10, marginRight: 5 }}>${hardware.price}</Text>
-                                {console.log(props)}
                             </View>
                             
                             {!inCart
@@ -63,7 +62,7 @@ const IndividualHarware = (props)=> {
                                     <Button icon="cart" color="green" mode="contained" style={{ marginRight: 15 }} onPress={addToCart}>Add To Cart</Button>
                                 </View>)
                                 : (<View style={{ padding: hp('2%'), flexDirection: 'row' }}>
-                                    <Button icon="cart" color="red" mode="contained" style={{ marginRight: 15 }} onPress={removeToCart} >Remove To Cart</Button>
+                                    <Button icon="cart" color="red" mode="contained" style={{ marginRight: 15 }} onPress={removeToCart} >Remove From Cart</Button>
                                 </View>)
                             }
 
