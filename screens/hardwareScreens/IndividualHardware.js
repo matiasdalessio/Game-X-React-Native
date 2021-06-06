@@ -55,7 +55,6 @@ const IndividualHarware = (props)=> {
                             <View style={{ padding: 5, flexDirection: 'row', alignItems: 'center' }}>
                                 <Icon name='shopping-bag' type='font-awesome-5' color='white' />
                                 <Text style={{ fontSize: hp('3%'), color: 'white', marginLeft: 10, marginRight: 5 }}>${hardware.price}</Text>
-                                {console.log(props)}
                             </View>
                             
                             {!inCart

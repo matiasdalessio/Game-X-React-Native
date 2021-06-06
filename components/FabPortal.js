@@ -43,7 +43,7 @@ const FabPortal = (props) => {
     // bottom:hp('70%'),
     // left:wp('75%')
   }
-
+  
     return (
     <Provider>
       <Portal>

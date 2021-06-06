@@ -20,7 +20,6 @@ const Index = (props) => {
   useEffect(() => {
     if (props.loadNavigation && props.navigation) {
       props.loadNavigation(props.navigation);
-      console.log("envie la action");
     }
   });
   return (
