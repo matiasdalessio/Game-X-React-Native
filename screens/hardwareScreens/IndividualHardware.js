@@ -62,7 +62,7 @@ const IndividualHarware = (props)=> {
                                     <Button icon="cart" color="green" mode="contained" style={{ marginRight: 15 }} onPress={addToCart}>Add To Cart</Button>
                                 </View>)
                                 : (<View style={{ padding: hp('2%'), flexDirection: 'row' }}>
-                                    <Button icon="cart" color="red" mode="contained" style={{ marginRight: 15 }} onPress={removeToCart} >Remove To Cart</Button>
+                                    <Button icon="cart" color="red" mode="contained" style={{ marginRight: 15 }} onPress={removeToCart} >Remove From Cart</Button>
                                 </View>)
                             }
 
