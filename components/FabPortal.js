@@ -32,12 +32,13 @@ const FabPortal = (props) => {
     justifyContent:'center',
     borderRadius:wp('100%'),
     position:'absolute',
-    bottom:hp('30%'),
-    left:wp('74%')
+    bottom:hp('35%'),
+    left:wp('74%'),
+    
   }
 
   const containerStyles = {
-    paddingBottom:hp('55%'),
+    paddingBottom:'94%',
     // transform:[{rotateX:50}]
     // position:'absolute',
     // bottom:hp('70%'),

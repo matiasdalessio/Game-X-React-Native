@@ -29,24 +29,19 @@ const Index = (props) => {
           source={require("../assets/fondo.png")}
           style={styles.firstBgStyle}
         >
-          <Text style={styles.titleStyleFirstView}>Dive in Game-X-State</Text>
-        </ImageBackground>
-        <ImageBackground
-          source={require("../assets/fondoRobot.jpg")}
-          style={styles.secondBgStyle}
-        >
-          <TouchableOpacity
-            style={styles.getStarted}
-            activeOpacity={0.5}
-            onPress={() =>
-              !props.userLogged
+            {/* <Text style={styles.titleStyleFirstView}>Dive in Game-X-State</Text> */}
+            <TouchableOpacity
+              style={styles.getStarted}
+              activeOpacity={0.5}
+              onPress={() =>
+                !props.userLogged
                 ? props.navigation.navigate("signIn")
                 : props.navigation.navigate("gameStore")
-            }
-          >
-            <Text style={styles.getStartedText}>GET STARTED!</Text>
-          </TouchableOpacity>
-        </ImageBackground>
+              }
+              >
+              <Text style={styles.getStartedText}>GET STARTED!</Text>
+            </TouchableOpacity>
+          </ImageBackground>
         <FabPortal />
       </View>
     </>
@@ -62,6 +57,8 @@ const styles = StyleSheet.create({
   getStartedText: {
     width: wp("65%"),
     fontSize: wp("8%"),
+    top:hp("80%"),
+    left:wp("18%"),
     borderRadius: 120,
     borderWidth: wp("1%"),
     borderColor: "white",
@@ -75,7 +72,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     borderStyle: "solid",
     borderColor: "white",
-    height: hp("55%"),
+    height: hp("100%"),
+    width:wp('100%'),
     position: "relative",
   },
   secondBgStyle: {
@@ -94,9 +92,10 @@ const styles = StyleSheet.create({
     fontSize: wp("7%"),
     textAlign: "center",
     color: "white",
+    fontWeight:'bold',
     position: "absolute",
-    top: hp("21%"),
-    left: wp("50%"),
+    top: hp("60%"),
+    left: wp("25%"),
   },
   getStarted: {
     marginBottom: "35%",
