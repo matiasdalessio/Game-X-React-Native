@@ -19,6 +19,7 @@ import {
 import HardwareStore from "../screens/hardwareScreens/HardwareAll";
 import IndividualHardware from "../screens/hardwareScreens/IndividualHardware";
 import { connect } from "react-redux";
+import Formulario2 from "../components/Formulario2";
 
 const Tab = createBottomTabNavigator();
 
@@ -92,6 +93,7 @@ const TabNavigator = (propsComponente)=>{
             <Tab.Screen name="hardwareAll" component={HardwareStore}/>
 
             <Tab.Screen name="cart" component={Cart}/>
+            <Tab.Screen name="formulario2" component={Formulario2}/>
 
         </Tab.Navigator>
     )

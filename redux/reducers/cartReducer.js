@@ -5,9 +5,10 @@ const initialState = {
 const cartReducer = (state = initialState, action) =>{
     switch(action.type) {
         case 'ADD_TO_CART':
-            state.allCart.push(action.payload)
+            // state.allCart.push(action.payload)
             return {
-                ...state
+                ...state,
+                allCart: [...state.allCart, action.payload]
             }
         case 'DELETE_TO_CART':
             const newProducts = state.allCart.filter(article => article._id !== action.payload)

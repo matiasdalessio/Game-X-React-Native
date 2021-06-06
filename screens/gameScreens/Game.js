@@ -15,14 +15,15 @@ const Game = (props) => {
     let imageBanner = { uri: 'https://image.api.playstation.com/cdn/UP0001/CUSA05904_00/IKYAgcRh0k3IOklJSDoNBTk5t5MSm7KE.png' }
     const [game, setGame] = useState(null)
     const [view, setView] = useState({ show: false, textBtn: 'View More' })
+    const [inCart, setInCart] = useState(false)
+
     useEffect(() => {
         setGame(props.route.params.game)
         if (props.allCart && game) {
             let gameInCart = props.allCart.some(productCart => productCart._id === game._id) 
-            gameInCart ?setInCart(!inCart): setInCart(!inCart)
+            gameInCart ?setInCart(true): setInCart(false)
         }
     }, [props.route.params.game])
-    const [inCart, setInCart] = useState(false)
     const addToCart = () => {
         setInCart(!inCart)
         props.addToCart(game)
@@ -43,7 +44,6 @@ const Game = (props) => {
                             <Text style={{ fontSize: hp('3%'), color: 'white' }}>{game.developer}</Text>
                         </View>
                     </View>
-                    {console.log(props.allCart)}
                     <View style={{ alignItems: 'center', padding: 8 }}>
                         <View style={{ width: wp('80%'), borderColor: 'white', borderWidth: 1, borderRadius: 10 }}>
                             <View style={{ padding: 5, flexDirection: 'row', alignItems: 'center' }}>
@@ -51,7 +51,7 @@ const Game = (props) => {
                                 {game.discount > 0
                                     ? (
                                         <>
-                                            <Text style={{ fontSize: hp('3%'), color: 'white', marginLeft: 10, marginRight: 5 }}>${Math.ceil(game.price - ((game.price * game.discount) / 100))}</Text>
+                                            <Text style={{ fontSize: hp('3%'), color: 'white', marginLeft: 10, marginRight: 5 }}>${(game.price - ((game.price * game.discount) / 100).toFixed(0))}</Text>
                                             <Text style={{ fontSize: hp('3%'), color: 'rgba(223, 217, 217, 0.578)', textDecorationLine: 'line-through', marginLeft: 5, marginRight: 5 }}>${game.price}</Text>
                                         </>
                                     )
@@ -120,7 +120,7 @@ const Game = (props) => {
                         </View>
                     </View>
                     <View style={{ padding: hp('2%'), paddingBottom: hp('5%') }}>
-                        <Button color="white" mode="contained" onPress={() => props.navigation.navigate('store')}>Go To Games</Button>
+                        <Button color="white" mode="contained" onPress={() => props.navigation.navigate('gameStore')}>Go To Games</Button>
                     </View>
                 </ScrollView>
                 : <ActivityIndicator />
