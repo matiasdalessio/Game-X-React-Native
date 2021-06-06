@@ -144,6 +144,11 @@ const toastF = (type,title,text,visibilityTime,autoHide,onShow,onHide,onPress)=>
 
     const signUp = async (googleUser) => {
         setLoading(true)
+        if(newUser.country === "-"){
+            toastF('error','Error',"Country is required",2500,true)
+            setLoading(false)
+            return null
+        }
         const formData = new FormData()
         formData.append('userName', newUser.userName)
         formData.append('avatar', pickedImagePath) 
@@ -185,10 +190,14 @@ const toastF = (type,title,text,visibilityTime,autoHide,onShow,onHide,onPress)=>
           });
     
           if (type === "success") {
-            signUp({userName:user.email,password:"matias"+user.id,country:'null',imageUrl:user.photoUrl,avatar:user.photoUrl})
+              toastF('success','Welcome','Welcome to Game-X',2500,true)
+              signUp({userName:user.email,password:"matias"+user.id,country:'null',imageUrl:user.photoUrl,avatar:user.photoUrl})
+              setLoading(false)
           }
         } catch (error) {
-          console.log("SignIn.js 142 | error with login", error);
+            setLoading(false)
+            toastF('error','Error','Error trying to connect with server',2500,true)
+            console.log("SignIn.js 142 | error with login", error);
         }
       };
 
@@ -282,30 +291,20 @@ const toastF = (type,title,text,visibilityTime,autoHide,onShow,onHide,onPress)=>
                                 }
                             </Picker>
                         </View>
-                        
-                    
-
                         <TouchableOpacity activeOpacity={.5} style={styles.signInButton} onPress={()=>signUp()}>
                             <Text style={styles.signInButtonText}>Sign Up</Text>
                         </TouchableOpacity>
-
-                        {/* PICKER COUNTRY Y PICKER IMAGE */}
-
                     </View>
 
                 </> 
                 :<View style={styles.otherSignInOptions}>
                             <Text style={[styles.signInOptionText,{color:'white',marginBottom:hp('7%'),marginTop:hp('10%')}]}>Create account . . . </Text> 
-                        <TouchableOpacity activeOpacity={.6} style={[styles.signInOption,{backgroundColor:'rgba(255,255,255,0.7)'}]} onPress={()=>setEmailSignUp(!emailSignUp)}>
-                            <Icon name="email" type="material-community" color="#06a" size={40}/>
-                            <Text style={styles.signInOptionText}>Sign Up with Email</Text> 
+                        <TouchableOpacity activeOpacity={.6} style={[styles.inputIconCtn]} onPress={()=>setEmailSignUp(!emailSignUp)}>
+                            <Icon name="email" type="material-community" color="#fff" size={40}/>
+                            <Text style={[styles.signInOptionText,{color:'white'}]}>Sign Up with Email</Text> 
                         </TouchableOpacity>
-                            <Text style={[styles.signInOptionText,{color:'white',marginVertical:hp('2.5%'),fontSize:wp('10%')}]}>Or...</Text> 
-                        {/* <TouchableOpacity activeOpacity={.6} style={styles.signInOption}>
-                            <Icon name="facebook" type="material-community" color="#4064ac" size={40}/>
-                            <Text style={styles.signInOptionText}>Sign in with Facebook</Text> 
-                        </TouchableOpacity> */}
-                        <TouchableOpacity activeOpacity={.6} style={styles.signInOption}>
+                            <Text style={[styles.signInOptionText,{color:'white',marginBottom:hp('2.5%'),marginTop:hp('5%'),fontSize:wp('10%')}]}>Or...</Text> 
+                        <TouchableOpacity activeOpacity={.6} style={styles.signInOption} onPress={signUpAsync}>
                             <Icon name="google-plus" type="material-community" color="#ec4e1d" size={40}/>
                             <Text style={styles.signInOptionText}>Sign Up with Google</Text> 
                         </TouchableOpacity>

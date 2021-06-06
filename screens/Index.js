@@ -14,6 +14,7 @@ import {
 } from "react-native-responsive-screen";
 import FabPortal from "../components/FabPortal";
 import userActions from "../redux/actions/userActions";
+import FabUserLogged from "../components/FabUserLogged";
 
 const Index = (props) => {
   // console.log(props)
@@ -43,6 +44,7 @@ const Index = (props) => {
             </TouchableOpacity>
           </ImageBackground>
         <FabPortal />
+        {props.userLogged && <FabUserLogged />}
       </View>
     </>
   );

@@ -11,8 +11,24 @@ import { Image } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import CartEmpty from './CartEmpty';
 import CardCart from './CardCart';
+import Toast from 'react-native-toast-message'
 
 const Cart = (props) => {
+
+    const toastF = (type,title,text,visibilityTime,autoHide,onShow,onHide,onPress)=>{
+        return Toast.show({
+            type,
+            text1:title,
+            text2:text,
+            visibilityTime,
+            autoHide,
+            onShow,
+            onHide,
+            onPress
+        })
+    }
+
+
     const [cart, setCart] = useState([])
     useEffect(() => {
         setCart(props.allCart)
@@ -88,8 +104,8 @@ const Cart = (props) => {
                             })}
                         </ScrollView>
                         <View style={{ backgroundColor: 'white', paddingBottom: hp('6%'), flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Button color="rgb(87, 202, 87)" dark={true} mode="contained" style={{ marginTop: 15, marginLeft: 10 }} onPress={() => props.navigation.navigate('store')}>Finish Buy</Button>
-                            <Button color="#061320" dark={true} mode="contained" style={{ marginTop: 15, marginRight: 10 }} onPress={() => props.navigation.navigate('storeMain')}>Go to Store</Button>
+                            <Button color="rgb(87, 202, 87)" dark={true} mode="contained" style={{ marginTop: 15, marginLeft: 10 }} onPress={() => props.userLogged ? props.navigation.navigate('formulario') : toastF('error','Error','You must be logged to proceed the transaction.',3000,true,null,null,()=>props.navigation.navigate('signIn'))}>Finish Buy</Button>
+                            <Button color="#061320" dark={true} mode="contained" style={{ marginTop: 15, marginRight: 10 }} onPress={() =>  props.navigation.navigate('storeMain')}>Go to Store</Button>
                         </View>
                     </View>
                 )
@@ -99,7 +115,8 @@ const Cart = (props) => {
 }
 const mapStateToProps = (state) => {
     return {
-        allCart: state.cartReducer.allCart
+        allCart: state.cartReducer.allCart,
+        userLogged: state.userReducer.userLogged
     }
 }
 

@@ -7,6 +7,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ImageBackgroundBase } from 'react-native';
 import { Image } from 'react-native';
+
 const GameStore = (props) => {
     useEffect(() => {
         // props.loadGames()

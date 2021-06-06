@@ -8,7 +8,6 @@ import {
     heightPercentageToDP as hp
   } from 'react-native-responsive-screen';
 import { connect } from 'react-redux';
-import SignOptions from '../screens/SignOptions';
 import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import Cart from '../screens/Cart';
@@ -103,7 +102,6 @@ const NavigatorDrawer = (props) => {
   return (
       <Drawer.Navigator drawerContent={header} initialRouteName="home" drawerType="front" edgeWidth={15} drawerStyle={styles.drawerStyle}>
         <Drawer.Screen name="home" component={Index} />
-        <Drawer.Screen name="signOptions" component={SignOptions}/>
         <Drawer.Screen name="cart" component={Cart}/>
         {!props.user ? 
         <>

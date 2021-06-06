@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
 import SignUp from "../screens/SignUp";
 import SignIn from "../screens/SignIn";
-// import SignOptions from "../screens/SignOptions";
 import Index from "../screens/Index";
 import GameStore from "../screens/gameScreens/GameStore";
 import GamesAll from '../screens/gameScreens/GamesAll';
@@ -19,7 +18,9 @@ import {
 import HardwareStore from "../screens/hardwareScreens/HardwareAll";
 import IndividualHardware from "../screens/hardwareScreens/IndividualHardware";
 import { connect } from "react-redux";
-import Formulario2 from "../components/Formulario2";
+import Formulario2 from "../screens/FormScreens/Formulario2";
+import Formulario from "../screens/FormScreens/Formulario";
+import Formulario3 from "../screens/FormScreens/Formulario3";
 
 const Tab = createBottomTabNavigator();
 
@@ -50,18 +51,15 @@ const TabNavigator = (propsComponente)=>{
                     <Icon name="shopping-outline" type="material-community" size={38} />
                 </TouchableOpacity>
                     <Icon style={{opacity:0}} name="shopping-outline" type="material-community" color="black" size={42}/>
-                <TouchableOpacity style={{position:'relative'}} activeOpacity={.8} onPress={()=> !propsComponente.userLogged ? props.navigation.navigate("signIn"): null }>
+                <TouchableOpacity style={{position:'relative'}} activeOpacity={.8} onPress={()=> !propsComponente.userLogged ? props.navigation.navigate("signIn"): props.navigation.navigate('cart') }>
                    { !propsComponente.userLogged ? 
                     <Icon name="account-outline" type="material-community" size={42} style={styles.avatar}/>
-                    :<Image source={{uri:'https://game-x-arg.herokuapp.com'+propsComponente.userLogged.avatar}} style={styles.avatar}/>
+                    :<Icon name="cart-outline" type="material-community" size={42} style={styles.avatar}/>
                    }
                 </TouchableOpacity>              
                 <TouchableOpacity style={styles.container} activeOpacity={.8}  onPress={()=> props.navigation.navigate("home")}>
                     <Icon  name="home-outline" type="material-community" color="black" size={42}/>
                 </TouchableOpacity>
-                {/* <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("cart")}>
-                    <Icon name="account-outline" type="material-community" size={42} />
-                </TouchableOpacity> */}
             </View>
             : null
           )
@@ -78,8 +76,6 @@ const TabNavigator = (propsComponente)=>{
 
              <Tab.Screen name="storeMain" component={Store}/> 
 
-            {/* <Tab.Screen name="signOptions" component={SignOptions}/> */}
-
             <Tab.Screen name="signUp" component={SignUp}/>
 
             <Tab.Screen name="signIn" component={SignIn}/>
@@ -93,7 +89,12 @@ const TabNavigator = (propsComponente)=>{
             <Tab.Screen name="hardwareAll" component={HardwareStore}/>
 
             <Tab.Screen name="cart" component={Cart}/>
+
+            <Tab.Screen name="formulario" component={Formulario}/>
+
             <Tab.Screen name="formulario2" component={Formulario2}/>
+
+            <Tab.Screen name="formulario3" component={Formulario3}/>
 
         </Tab.Navigator>
     )

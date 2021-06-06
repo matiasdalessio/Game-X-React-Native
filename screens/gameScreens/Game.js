@@ -11,6 +11,9 @@ import { Button } from 'react-native-paper';
 import { Icon } from 'react-native-elements'
 import { Image } from 'react-native';
 import { ActivityIndicator } from 'react-native';
+import FabUserLogged from '../../components/FabUserLogged'
+// {props.userLogged && <FabUserLogged />}
+
 const Game = (props) => {
     let imageBanner = { uri: 'https://image.api.playstation.com/cdn/UP0001/CUSA05904_00/IKYAgcRh0k3IOklJSDoNBTk5t5MSm7KE.png' }
     const [game, setGame] = useState(null)
@@ -18,15 +21,17 @@ const Game = (props) => {
     const [inCart, setInCart] = useState(false)
 
     useEffect(() => {
+        setInCart(false)
         setGame(props.route.params.game)
         if (props.allCart && game) {
-            let gameInCart = props.allCart.some(productCart => productCart._id === game._id) 
-            gameInCart ?setInCart(true): setInCart(false)
+            console.log('me ejecute');
+            // let gameInCart = props.allCart.some(productCart => productCart._id === game._id) 
+            // gameInCart ?setInCart(true): setInCart(false)
         }
-    }, [props.route.params.game])
+    }, [props.route.params])
     const addToCart = () => {
         setInCart(!inCart)
-        props.addToCart(game)
+        props.addToCart({...game, cantidad:1})
     }
     const removeToCart = () => {
         setInCart(!inCart)
@@ -64,7 +69,7 @@ const Game = (props) => {
                                     <Button icon="cart" color="green" mode="contained" style={{ marginRight: 15 }} onPress={addToCart}>Add To Cart</Button>
                                 </View>)
                                 : (<View style={{ padding: hp('2%'), flexDirection: 'row' }}>
-                                    <Button icon="cart" color="red" mode="contained" style={{ marginRight: 15 }} onPress={removeToCart} >Remove From Cart</Button>
+                                    <Button icon="cart" color="red" mode="contained" style={{ marginRight: 15 }} onPress={removeToCart} >Remove To Cart</Button>
                                 </View>)
                             }
 
@@ -125,6 +130,7 @@ const Game = (props) => {
                 </ScrollView>
                 : <ActivityIndicator />
             }
+{props.userLogged && <FabUserLogged />}
 
         </>
     );
@@ -133,7 +139,9 @@ const mapStateToProps = (state) => {
     return {
         allGames: state.gamesReducer.allGames,
         preLoader: state.gamesReducer.preLoader,
-        allCart: state.cartReducer.allCart
+        allCart: state.cartReducer.allCart,
+        userLogged: state.userReducer.userLogged
+
     }
 }
 const mapDispatchToProps = {

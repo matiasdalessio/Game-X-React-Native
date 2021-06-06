@@ -1,10 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity, ScrollView, StatusBar, Alert } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity, ScrollView, StatusBar, Alert, Vibration } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Button, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
+import Toast from 'react-native-toast-message';
 
 const Formulario = (props) => {
+   
+    const toastF = (type,title,text,visibilityTime,autoHide,onShow,onHide,onPress)=>{
+        return Toast.show({
+            type,
+            text1:title,
+            text2:text,
+            visibilityTime,
+            autoHide,
+            onShow,
+            onHide,
+            onPress
+        })
+    }
+
     const [newSell, setNewSell] = useState({
         firstName: '',
         lastName: '',
@@ -20,19 +35,13 @@ const Formulario = (props) => {
     }
     const sendInfoUserBuyer = ()=>{
         if (Object.values(newSell).some(valor => valor === "")) {
-            Alert.alert('Fields','All fields are required')
+            Vibration.vibrate([100,400,100, 400])
+            toastF('error','Fields','All fields are required',3500,true)
             return false;
         }
-        // setNewSell({
-        //     firstName: '',
-        //     lastName: '',
-        //     city: '',
-        //     phone: '',
-        //     direction: ''})
-            props.navigationRedux.navigate('formulario2',{newSell: newSell}) 
-
+        props.navigationRedux.navigate('formulario2',{newSell: newSell}) 
     }
-    console.log(props.navigationRedux);
+    // console.log(props.navigationRedux);
     return (
         <>
             <StatusBar barStyle="light-content" />

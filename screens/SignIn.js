@@ -108,8 +108,10 @@ const SignIn = (props)=>{
         let userInfo = googleUser ? googleUser : user
         setLoading(true)
         const sendLogIn = async () => {
-            const respuesta = await props.logUser(userInfo)
-            if (!respuesta) {
+            try{
+
+                const respuesta = await props.logUser(userInfo)
+                if (!respuesta) {
                 toastF('error','Error','Error trying to connect with server',2500,true)
             } else if (respuesta.error) {
                 setLoading(false)
@@ -120,6 +122,9 @@ const SignIn = (props)=>{
                 setUser({userName:"",password:""})
                 props.navigation.navigate('home')
             }   
+        }catch(e){
+            toastF('error','Error','Error trying to connect with server',2500,true)
+        }
         }
             sendLogIn()
     }

@@ -9,6 +9,9 @@ import { Icon } from 'react-native-elements'
 import gameStyles from '../../styles/gameStyles';
 import { Button } from 'react-native-paper';
 import cartActions from '../../redux/actions/cartActions'
+import Loader from '../Loader';
+import FabUserLogged from '../../components/FabUserLogged'
+
 
 const IndividualHarware = (props)=> {
     const [hardware, setHardware] = useState({})
@@ -36,6 +39,7 @@ const IndividualHarware = (props)=> {
     if(!hardware.productName){
         return (<View style={{ backgroundColor: '#061320', width: wp('100%'), height: hp('100%'), alignItems: 'center', justifyContent: 'center' }}>
                     <ActivityIndicator size={'large'} color='white' />
+                    {/* <Loader /> */}
                 </View>)
     }
     
@@ -92,6 +96,7 @@ const IndividualHarware = (props)=> {
                         <Button color="white" mode="contained" onPress={() => props.navigation.navigate('storeMain')}>Go To hardware</Button>
                     </View>
                 </ScrollView>
+                    {props.userLogged && <FabUserLogged />}
     </>
   );
 }
@@ -142,14 +147,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) =>{
     return {
-        allHardware: state.hardwareReducer.allHardwares
+        allHardware: state.hardwareReducer.allHardwares,
+        userLogged: state.userReducer.userLogged
     }
 }
 
 const mapDispatchToProps = {
     loadHardware: hardwareActions.loadHardwares,
     addToCart: cartActions.addToCart,
-    deleteToCart: cartActions.deleteToCart
+    deleteToCart: cartActions.deleteToCart,
 }
 
 export default connect(mapStateToProps , mapDispatchToProps)(IndividualHarware)

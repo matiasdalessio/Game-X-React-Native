@@ -8,7 +8,6 @@ import {Image} from 'react-native'
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import userActions from '../redux/actions/userActions';
-import { View } from 'react-native';
 
 const FabPortal = (props) => {
     const [state, setState] = React.useState({ open: false });
@@ -18,10 +17,10 @@ const FabPortal = (props) => {
     const { open } = state;
     
     const logo={
-      width:'310%',
-      height:'310%',
+      width:'300%',
+      height:'300%',
       position:'absolute',
-      top:-25,
+      top:-15,
       right:-25,
    }
    const fabStyle={
@@ -31,55 +30,53 @@ const FabPortal = (props) => {
     alignItems:'center',
     justifyContent:'center',
     borderRadius:wp('100%'),
-    position:'absolute',
-    bottom:hp('25%'),
-    left:wp('74%'),
-    
-  }
-  const gif = {
-    width:wp('20%'),
-    height:wp('20%'),
-    position:'absolute',
-    top:0,
-    right:0
+    // position:'absolute',
+    // bottom:0,
+    // right:0
   }
 
   const containerStyles = {
-    paddingBottom:'120%',
+      zIndex:100,
+    //   paddingBottom:'10%'
   }
-
-  if(props.userLogged){
-    return (<Image source={require('../assets/logoGif.gif')} style={gif}/>)
-  }
-
+  
     return (
     <Provider>
       <Portal>
         <FAB.Group
           open={open}
           fabStyle={fabStyle}
-          icon={()=> <Image source={require('../assets/logoGif.gif')} style={logo}/>}
+          icon={()=> <Image source={{uri:'https://game-x-arg.herokuapp.com'+props.userLogged.avatar}} style={logo}/>}
           style={containerStyles}
           actions={[
-          {
-              icon: ()=> <Icon name="microsoft-xbox-controller" type="material-community" size={25}/>,
-              label: 'Games',
-              // color:'rgb(250,160,0)',
-              onPress: () => props.navigationRedux.navigate('gameStore'),
-              small: false,
-          },
+            {
+                icon:()=>{
+                  return props.userLogged ? 
+                  <Icon name="logout" color="black" /> 
+                  : <View /> }, 
+                //   label: props.userLogged ? "Log Out" : null,
+                onPress: () => props.removeUserInfo(),
+                style:!props.userLogged && {opacity:0}
+            },
           {
               icon:()=> <Icon name="sony-playstation" type="material-community" size={25}/>,
               label: 'Consoles',
-              small: false,
+              small: true,
               onPress: () => props.navigationRedux.navigate('hardwareAll'),
           },
           {
-            icon:()=> <Icon name="cart" type="material-community" size={25}/>,
-            label: 'Cart',
-            small: true,
-            onPress: () => props.navigationRedux.navigate('cart'),
-          },
+            icon: ()=> <Icon name="microsoft-xbox-controller" type="material-community" size={25}/>,
+            label: 'Games',
+            // color:'rgb(250,160,0)',
+            onPress: () => props.navigationRedux.navigate('gameStore'),
+            small: false,
+        },
+        //   {
+        //     icon:()=> <Icon name="cart" type="material-community" size={25}/>,
+        //     label: 'Cart',
+        //     small: true,
+        //     onPress: () => props.navigationRedux.navigate('cart'),
+        //   },
           ]}
           onStateChange={onStateChange}
           onPress={() => {
@@ -90,6 +87,7 @@ const FabPortal = (props) => {
         />
       </Portal>
     </Provider>
+
     );
   }
 
