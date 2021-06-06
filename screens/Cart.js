@@ -11,6 +11,7 @@ import { Image } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import CartEmpty from './CartEmpty';
 import CardCart from './CardCart';
+
 const Cart = (props) => {
     const [cart, setCart] = useState([])
     useEffect(() => {
@@ -60,6 +61,7 @@ const Cart = (props) => {
             return null
         })
         setTotal(sumSubTotal)
+
 
     }
     

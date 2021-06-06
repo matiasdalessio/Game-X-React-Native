@@ -26,6 +26,7 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigator = (propsComponente)=>{
 
+    console.log(propsComponente.userLogged)
     const [show, setShow] = useState(true)
 
 

@@ -10,12 +10,14 @@ import {
 } from "react-native-responsive-screen";
 import NavigatorBottomTab from './navigation/NavigatorBottomTab';
 import Toast from 'react-native-toast-message'
+import Loader from './screens/Loader';
 
 const App2 = (props) => {
   return (
       <NavigationContainer>
         {/* <StatusBar /> */}
         <NavigatorBottomTab />
+        {/* <Loader/> */}
         <Toast ref={(ref)=>Toast.setRef(ref)}/>
       </NavigationContainer>
   );

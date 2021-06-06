@@ -30,6 +30,7 @@ const Formulario = (props) => {
         //     phone: '',
         //     direction: ''})
             props.navigationRedux.navigate('formulario2',{newSell: newSell}) 
+
     }
     console.log(props.navigationRedux);
     return (
