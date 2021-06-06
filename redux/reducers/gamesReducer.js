@@ -14,7 +14,6 @@ const gamesReducer = (state = initialState, action) => {
             }
         case 'FILTER_GAMES':
             let filterGamesComplete;
-            console.log(state.gamesFiltered.length);
             let valueInput = action.payload.trim().toLowerCase()
             if (valueInput === 'add') {
                 filterGamesComplete = state.allGames.slice(0,state.gamesFiltered.length * 2)

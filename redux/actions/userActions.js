@@ -1,6 +1,17 @@
 import axios from "axios"
-// import console.log from 'sweetalert'
-
+import Toast from 'react-native-toast-message'
+const toastF = (type,title,text,visibilityTime,autoHide,onShow,onHide,onPress)=>{
+    return Toast.show({
+        type,
+        text1:title,
+        text2:text,
+        visibilityTime,
+        autoHide,
+        onShow,
+        onHide,
+        onPress
+    })
+}
 const userActions = {
     logUser: (userInfo) => {
         return async (dispatch, getState) => {
@@ -16,7 +27,7 @@ const userActions = {
                 })
                 return `Welcome back, ${respuesta.data.respuesta.userName}!`
             }catch(error) {
-                return console.log("Failed to try to connect with server", "Please try again in a few minutes", "error")
+                return toastF('error',"Failed to try to connect with server", "Please try again in a few minutes",2500,true)
             } 
         }
     },
@@ -34,7 +45,7 @@ const userActions = {
                 })
                 return `Welcome ${respuesta.data.respuesta.userName}!`               
             }catch(error) {
-                return console.log("Failed to try to connect with server", "Please try again in a few minutes", "error")
+                return toastF('error',"Failed to try to connect with server", "Please try again in a few minutes",2500,true)
             } 
         }
     },
@@ -52,7 +63,7 @@ const userActions = {
                 }})
             } catch(error) {
                 if (!error.response) {
-                    return console.log("Failed to try to connect with server", "Please try again in a few minutes", "error")
+                    return toastF('error',"Failed to try to connect with server", "Please try again in a few minutes",2500,true)
                 } else if (error.response.status && error.response.status > 399 && error.response.status < 499) {
                     console.log("Invalid Token", "Please Log in again", "error")
                     dispatch({type: 'LOG_OUT', payload: null})
@@ -74,7 +85,7 @@ const userActions = {
                     return respuesta.data.respuesta.userName
                 }
             } catch(error) {
-                return console.log("Failed to try to connect with server", "Please try again in a few minutes", "error")
+                return toastF('error',"Failed to try to connect with server", "Please try again in a few minutes",2500,true)
             }           
         }
     },
@@ -127,7 +138,7 @@ const userActions = {
                 })
                 return response.data.response               
             }catch(error) {
-                return console.log("Failed to try to connect with server", "Please try again in a few minutes", "error")
+                return toastF('error',"Failed to try to connect with server", "Please try again in a few minutes",2500,true)
             } 
         }
     }, 

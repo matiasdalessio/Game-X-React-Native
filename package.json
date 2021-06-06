@@ -24,9 +24,11 @@
     "lottie-react-native": "^4.0.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-hook-form": "^7.8.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
     "react-native-animated-loader": "0.0.9",
     "react-native-elements": "^3.4.1",
+    "react-native-expo-fancy-alerts": "^2.1.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-paper": "^4.9.1",
     "react-native-reanimated": "^2.1.0",
@@ -41,7 +43,8 @@
     "react-navigation-tabs": "^2.11.1",
     "react-redux": "^7.2.4",
     "redux": "^4.1.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "rn-credit-card": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

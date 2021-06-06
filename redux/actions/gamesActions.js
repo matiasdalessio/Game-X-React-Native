@@ -13,7 +13,6 @@ const gamesActions = {
         }
     },
     filterGames: (value)=>{
-        console.log(value);
         return (dispatch, getState)=>{
             dispatch({ type: 'FILTER_GAMES', payload: value})
         }

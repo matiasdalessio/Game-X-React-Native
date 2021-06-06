@@ -44,11 +44,9 @@ const SignUp = (props)=>{
     const result = await ImagePicker.launchImageLibraryAsync();
 
     // Explore the result
-    console.log(result);
 
     if (!result.cancelled) {
       setPickedImagePath(result.uri);
-      console.log(result.uri);
     }
   }
 
@@ -65,11 +63,9 @@ const SignUp = (props)=>{
     const result = await ImagePicker.launchCameraAsync();
 
     // Explore the result
-    console.log(result);
 
     if (!result.cancelled) {
       setPickedImagePath(result.uri);
-      console.log(result.uri);
     }
   }
 
@@ -213,7 +209,6 @@ const toastF = (type,title,text,visibilityTime,autoHide,onShow,onHide,onPress)=>
         ],{cancelable:true})
       }
 
-      console.log(newUser)
     return (
         <ScrollView>
             <ImageBackground source={require('../assets/night.jpg')} style={styles.fondo}>

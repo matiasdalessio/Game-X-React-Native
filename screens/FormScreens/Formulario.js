@@ -39,9 +39,8 @@ const Formulario = (props) => {
             toastF('error','Fields','All fields are required',3500,true)
             return false;
         }
-        props.navigationRedux.navigate('formulario2',{newSell: newSell}) 
+        props.navigationRedux.navigate('formulario2',{newSell: newSell,totalPrice:props.route.params.totalPrice}) 
     }
-    // console.log(props.navigationRedux);
     return (
         <>
             <StatusBar barStyle="light-content" />

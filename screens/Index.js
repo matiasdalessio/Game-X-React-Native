@@ -17,7 +17,6 @@ import userActions from "../redux/actions/userActions";
 import FabUserLogged from "../components/FabUserLogged";
 
 const Index = (props) => {
-  // console.log(props)
   useEffect(() => {
     if (props.loadNavigation && props.navigation) {
       props.loadNavigation(props.navigation);

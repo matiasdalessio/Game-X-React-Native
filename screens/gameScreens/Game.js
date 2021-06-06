@@ -24,9 +24,8 @@ const Game = (props) => {
         setInCart(false)
         setGame(props.route.params.game)
         if (props.allCart && game) {
-            console.log('me ejecute');
-            // let gameInCart = props.allCart.some(productCart => productCart._id === game._id) 
-            // gameInCart ?setInCart(true): setInCart(false)
+            let gameInCart = props.allCart.find(productCart => productCart._id === game._id) 
+            gameInCart ? setInCart(true): setInCart(false)
         }
     }, [props.route.params])
     const addToCart = () => {

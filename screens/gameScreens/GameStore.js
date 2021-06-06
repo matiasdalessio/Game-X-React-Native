@@ -7,20 +7,11 @@ import { TextInput, Button } from 'react-native-paper';
 import gameStyles from '../../styles/gameStyles';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Loader from '../Loader'
-import FabUserLogged from '../../components/FabUserLogged'
-// {props.userLogged && <FabUserLogged />}
-
 const myIcon = <Icon name="rocket" size={30} color="#900" />;
 const GameStore = (props) => {
     const theScrollView = useRef()
     useEffect(() => {
         props.loadGames()
-        props.navigation.addListener('focus',()=>{
-            if(theScrollView.current){
-                theScrollView.current.scrollTo({x:0,y:0,animated:false})
-            }
-        })
     }, [])
     let cities = [
         {
@@ -41,7 +32,6 @@ const GameStore = (props) => {
             {props.preLoader
                 ? (<View style={{backgroundColor:'#061320', width:wp('100%'),height:hp('100%'), alignItems:'center', justifyContent:'center'}}>
                     <ActivityIndicator size={'large'} color='white' />
-                    {/* <Loader /> */}
                 </View>)
                 : (
                     <ScrollView ref={theScrollView}>
@@ -128,7 +118,6 @@ const GameStore = (props) => {
                     </ScrollView>
                 )
             }
-            {props.userLogged && <FabUserLogged />}
         </>
     );
 }
@@ -145,9 +134,7 @@ const mapStateToProps = (state) => {
     return {
         allGames: state.gamesReducer.allGames,
         preLoader: state.gamesReducer.preLoader,
-        navigationRedux: state.navigationReducer.navigationRedux,
-        userLogged: state.userReducer.userLogged
-
+        navigationRedux: state.navigationReducer.navigationRedux
     }
 }
 const mapDispatchToProps = {

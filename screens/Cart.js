@@ -37,27 +37,16 @@ const Cart = (props) => {
 
     const [total, setTotal] = useState(0)
     const arraySubTotales = []
-    console.log('me renderize');
     cart.length && cart.map(art => arraySubTotales.push({ id: art._id, subtotal: art.discount ? (art.price - art.price * art.discount / 100) : art.price }))
 
     const elProblema =()=>{
-        // arraySubTotales.map(articulo =>{
-        //     if (cart.some(art => art._id !== articulo.id) ) {
-        //          arraySubTotales.push({ id: art._id, subtotal: art.discount ? (art.price - art.price * art.discount / 100) : art.price })
-        //          return
-        //     }
-            
-        // })
 
         cart.map(art =>{
-            console.log(art);
             if (arraySubTotales.some(articulo => articulo.id !== art._id) ) {
 
                 arraySubTotales.push({ id: art._id, subtotal: art.discount ? (art.price - art.price * art.discount / 100) : art.price })
-                console.log('ifff');
                 return art
             }
-            console.log('fuera del ifff');
             return art
         })
     }
@@ -69,10 +58,8 @@ const Cart = (props) => {
             }
             return art
         })
-        console.log(arraySubTotales);
         var sumSubTotal = 0
         arraySubTotales.map(art =>{
-            console.log('dentro del map');
             sumSubTotal += art.subtotal
             return null
         })
@@ -81,7 +68,6 @@ const Cart = (props) => {
 
     }
     
-    console.log(total);
     return (
         <>
             {(cart.length == 0)
@@ -104,7 +90,7 @@ const Cart = (props) => {
                             })}
                         </ScrollView>
                         <View style={{ backgroundColor: 'white', paddingBottom: hp('6%'), flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Button color="rgb(87, 202, 87)" dark={true} mode="contained" style={{ marginTop: 15, marginLeft: 10 }} onPress={() => props.userLogged ? props.navigation.navigate('formulario') : toastF('error','Error','You must be logged to proceed the transaction.',3000,true,null,null,()=>props.navigation.navigate('signIn'))}>Finish Buy</Button>
+                            <Button color="rgb(87, 202, 87)" dark={true} mode="contained" style={{ marginTop: 15, marginLeft: 10 }} onPress={() => props.userLogged ? props.navigation.navigate('formulario',{totalPrice:total}) : toastF('error','Error','You must be logged to proceed the transaction.',3000,true,null,null,()=>props.navigation.navigate('signIn'))}>Finish Buy</Button>
                             <Button color="#061320" dark={true} mode="contained" style={{ marginTop: 15, marginRight: 10 }} onPress={() =>  props.navigation.navigate('storeMain')}>Go to Store</Button>
                         </View>
                     </View>

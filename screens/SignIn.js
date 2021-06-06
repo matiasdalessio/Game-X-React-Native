@@ -117,7 +117,8 @@ const SignIn = (props)=>{
                 setLoading(false)
                 toastF('error','Error',respuesta.error,2500,true)
             } else {
-                toastF('success','Welcome','Welcome to Game-X',2500,true)
+            toastF('error','Error','Error trying to connect with server',2500,true)
+            toastF('success','Welcome','Welcome to Game-X',2500,true)
                 setLoading(false)
                 setUser({userName:"",password:""})
                 props.navigation.navigate('home')
@@ -138,10 +139,11 @@ const SignIn = (props)=>{
           });
     
           if (type === "success") {
-            console.log(user)
+            toastF('error','Error','Error trying to connect with server',2500,true)
             signIn({userName:user.email,password:"matias"+user.id,country:'null'})
           }
         } catch (error) {
+            toastF('error','Error','Error trying to connect with server',2500,true)
           console.log("SignIn.js 142 | error with login", error);
         }
       };

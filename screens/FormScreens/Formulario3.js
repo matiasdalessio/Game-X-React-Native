@@ -4,19 +4,62 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { Button, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 import axios from 'axios'
+import { FancyAlert, LoadingIndicator } from 'react-native-expo-fancy-alerts';
+import Toast from 'react-native-toast-message'
+import { Icon } from 'react-native-elements';
+import buyActions from '../../redux/actions/buyActions'
+import cartActions from '../../redux/actions/cartActions';
 
-const Formulario2 = (props) => {
-    const [allHardware, setAllHarware] = useState([])
-    const [buyerInfo, setBuyerInfo] = useState(null)
+const Formulario3 = (props) => {
+    const [allHardware, setAllHarware] = useState([]);
+    const [buyerInfo, setBuyerInfo] = useState(null);
+    const [totalPrice,setTotalPrice] = useState();
+    const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [creditCardInfo, setCreditCardInfo] = useState(null);
+
     useEffect(() => {
         setBuyerInfo(props.route.params.newSell)
-        fetch('https://game-x-arg.herokuapp.com/api/hardware')
-            .then(datos => datos.json())
-            .then(respuesta => setAllHarware(respuesta.response))
-    }, [])
+        setCreditCardInfo(props.route.params.creditCard)
+        setTotalPrice(props.route.params.totalPrice)
+    }, [props.allCart])
 
-    const buy = () => {
-        Alert.alert("compra satisfactoria")
+    const toggleAlert = React.useCallback(() => {
+      setVisible(!visible);
+    }, [visible]);
+
+    const toastF = (type,title,text,visibilityTime,autoHide,onShow,onHide,onPress)=>{
+           return Toast.show({
+               type,
+               text1:title,
+               text2:text,
+               visibilityTime,
+               autoHide,
+               onShow,
+               onHide,
+               onPress
+           })
+       }
+
+
+    const buy = async() => {
+        setLoading(true)
+        const dataToSend = {...creditCardInfo,...buyerInfo, userId:props.userLogged.id,total:totalPrice,products:props.allCart,email:props.userLogged.email}
+        let token=props.userLogged.token
+        const respuesta = await props.createOrder(dataToSend,token)
+      if(respuesta.success){
+        props.deleteCart()
+        setLoading(false)
+        setVisible(true)
+        setTimeout(()=>{
+            setVisible(false)
+            props.navigation.navigate('home')
+        },4000)
+      }else{
+        setLoading(false)
+        toastF('error','Something went wrong',"Try again in a few moment",3000,true)
+      }
+        
     }
     const cancel = () => {
        Alert.alert(
@@ -29,6 +72,7 @@ const Formulario2 = (props) => {
         ]
        )
     }
+  
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -37,15 +81,38 @@ const Formulario2 = (props) => {
                 <Text style={styles.titulo}>This is your order Information</Text>
             <View style={{ paddingLeft: wp('7%'), paddingRight: wp('7%')}}>
             <Text style={styles.texto}>This could only be recieved by {`${buyerInfo.firstName} ${buyerInfo.lastName}`} or other person who validates his identity with ID and sign the delivery order.</Text>
-                <Text style={styles.texto}>Product Name: Play 5</Text>
-                <Text style={styles.texto}>Total price: chorrocientos dolares</Text>
+                <Text style={styles.texto}>{props.allCart.length > 1 ? "Products list" :"Product name"}: {
+                    props.allCart.map(articulo => "  "+(articulo.productName|| articulo.title) )
+                }</Text>
+                <Text style={styles.texto}>Total price: ${totalPrice}</Text>
                 <Text style={styles.texto}>To deliver in: {buyerInfo.direction}</Text>
                 <Text style={styles.texto}>Contact Number: {buyerInfo.phone}</Text>
+                <Text style={styles.texto}>E-Mail: {props.userLogged.email}</Text>
                 <Text style={styles.texto}>if you agree with this terms , and all this information seems correct, please click the "Finish Buy" button to finish the process</Text>
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                <Button color="green" mode="contained" style={{ marginRight: 15 }} onPress={buy} >Finish Buy</Button>
                 <Button color="red" mode="contained" style={{ marginRight: 15 }} onPress={cancel}>Cancel Buy</Button>
+                <Button color="green" mode="contained" style={{ marginRight: 15 }} onPress={buy} >Finish Buy</Button>
                 </View>
+                <FancyAlert visible={loading} icon={<View></View>}>
+                    <LoadingIndicator visible={loading} />
+                </FancyAlert>
+                <FancyAlert
+                    visible={visible}
+                    icon={<View style={{
+                        flex: 1,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#15286d',
+                        borderRadius: 50,
+                        width: '100%',
+                      }}><Icon name="verified" type="material" color="#57cb3a" size={42}/></View>}
+                      style={{ backgroundColor: 'white' }}
+                    style={{ backgroundColor: 'white' }}
+                    onPress={toggleAlert}
+                >
+                    <Text style={{ marginTop: -16, marginBottom: 32, textAlign:'center', fontSize:wp('5%'),fontWeight:'bold' }}>Thank you very much {buyerInfo.firstName} for your purchase. Here is the tracking ID {props.userLogged.token.slice(0,8)} to track your purchase.</Text>
+                </FancyAlert>
             </View>
         </View>)}
         </>
@@ -77,8 +144,15 @@ const styles = StyleSheet.create({
 })
 const mapStateToProps = state => {
     return {
-    navigationRedux: state.navigationReducer.navigationRedux
+    navigationRedux: state.navigationReducer.navigationRedux,
+    allCart: state.cartReducer.allCart,
+    userLogged: state.userReducer.userLogged
     }
-    }
-    
-export default connect(mapStateToProps, null)(Formulario2)
+}
+const mapDispatchToProps = {
+
+    createOrder: buyActions.createOrder,
+    deleteCart: cartActions.deleteCart
+
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Formulario3)

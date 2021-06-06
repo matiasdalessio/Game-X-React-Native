@@ -1,23 +1,53 @@
 const cartActions = {
-    addToCart: (game) => {
+    addToCart: (products) => {
         return async (dispatch, getState) => {
             try {
-                dispatch({type: 'ADD_TO_CART', payload: game})
+                dispatch({type: 'ADD_TO_CART', payload: products})
             } catch (error) {             
                 console.log(error);
-                alert('error en cart action')
+                console.log('error en addToCart')
             }        
         }
     },
-    deleteToCart: (gameId) => {
+    deleteToCart: (products) => {
         return async (dispatch, getState) => {
             try {
-                dispatch({type: 'DELETE_TO_CART', payload: gameId})
+                dispatch({type: 'DELETE_TO_CART', payload: products})
             } catch (error) {             
                 console.log(error);
-                alert('error en cart action')
+                console.log('error en deleteToCart')
             }        
         }
-    }
+    },
+    setCartLS:(products) => {
+        return async (dispatch, getState) => {
+            try {
+                dispatch({type: 'SET_CART_LS', payload: products})
+            } catch (error) {             
+                console.log(error);
+                console.log('error en setCartLS')
+            }        
+        }
+    },
+    proceedToPayment:(products) => {
+        return async (dispatch, getState) => {
+            try {
+                dispatch({type: 'CLOSE_BUY_ORDER', payload: products})
+            } catch (error) {             
+                console.log(error);
+                console.log('error en proceedToPayment')
+            }        
+        }
+    },
+    deleteCart: (products) => {
+        return async (dispatch, getState) => {
+            try {
+                dispatch({type: 'DELETE_CART'})
+            } catch (error) {             
+                console.log(error);
+                console.log('error en proceedToPayment')
+            }        
+        }
+    },
 }
 export default cartActions
