@@ -135,9 +135,7 @@ const SignIn = (props)=>{
           const { type, user } = await Google.logInAsync({
             androidClientId: `382714051375-l6ppnha19bouskqa43p1kt5n1m0b61hr.apps.googleusercontent.com`,
           });
-          console.log(type)
           if (type === "success") {
-            toastF('error','Error','Error trying to connect with server',2500,true)
             signIn({userName:user.email,password:"matias"+user.id,country:'null'})
         }
         if(type === 'cancel'){
@@ -147,7 +145,6 @@ const SignIn = (props)=>{
         } catch (error) {
             toastF('error','Error','Error trying to connect with server',2500,true)
             setLoading(false)
-            console.log("SignIn.js 142 | error with login", error);
             }
       };
     
