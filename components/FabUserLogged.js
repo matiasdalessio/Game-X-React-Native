@@ -20,11 +20,11 @@ const FabPortal = (props) => {
       width:'300%',
       height:'300%',
       position:'absolute',
-      top:-15,
+      top:-25,
       right:-25,
    }
    const fabStyle={
-    backgroundColor:'transparent',
+    backgroundColor:'#15286d',
     width:wp('20%'),
     height:wp('20%'),
     alignItems:'center',
@@ -46,7 +46,7 @@ const FabPortal = (props) => {
           open={open}
           fabStyle={fabStyle}
           icon={()=> <Image source={{uri:props.userLogged.imageUrl === "" || !props.userLogged.imageUrl ? 'https://game-x-arg.herokuapp.com'+props.userLogged.avatar : props.userLogged.imageUrl }} style={logo}/>}
-          style={containerStyles}
+          style={[containerStyles, {shadowRadius:0}]}
           actions={[
             {
                 icon:()=>{

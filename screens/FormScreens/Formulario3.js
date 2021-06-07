@@ -55,7 +55,7 @@ const Formulario3 = (props) => {
         setTimeout(()=>{
             setVisible(false)
             props.navigation.navigate('home')
-        },4000)
+        },8000)
       }else{
         setLoading(false)
         toastF('error','Something went wrong',"Try again in a few moment",3000,true)
