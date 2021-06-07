@@ -46,7 +46,7 @@ const TabNavigator = (propsComponente)=>{
     const Navigation = (props)=>{
           return(show ?
           <View style={styles.tabBar}>
-                <TouchableOpacity activeOpacity={.8} onPress={()=>props.navigation.navigate("storeMain")}>
+                <TouchableOpacity activeOpacity={.8} onPress={()=> !propsComponente.userLogged ? props.navigation.navigate("storeMain"): props.navigation.navigate("gameStore")}>
                     <Icon name="shopping-outline" type="material-community" size={38} />
                 </TouchableOpacity>
                     <Icon style={{opacity:0}} name="shopping-outline" type="material-community" color="black" size={42}/>

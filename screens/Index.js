@@ -36,7 +36,7 @@ const Index = (props) => {
               onPress={() =>
                 !props.userLogged
                 ? props.navigation.navigate("signIn")
-                : props.navigation.navigate("gameStore")
+                : props.navigation.navigate("storeMain")
               }
               >
               <Text style={styles.getStartedText}>GET STARTED!</Text>

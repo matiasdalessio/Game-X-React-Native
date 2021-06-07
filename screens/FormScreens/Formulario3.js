@@ -87,7 +87,7 @@ const Formulario3 = (props) => {
                 }</Text>
                 <Text style={styles.texto}>Total price: ${totalPrice}</Text>
                 <Text style={styles.texto}>To deliver in: {buyerInfo.direction}</Text>
-                <Text style={styles.texto}>Contact Number: {buyerInfo.phone}</Text>
+                <Text style={styles.texto}>Contact Number: {buyerInfo.cellphone}</Text>
                 <Text style={styles.texto}>E-Mail: {props.userLogged.email}</Text>
                 <Text style={styles.texto}>if you agree with this terms , and all this information seems correct, please click the "Finish Buy" button to finish the process</Text>
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
