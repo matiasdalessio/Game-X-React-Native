@@ -66,7 +66,6 @@ const FabPortal = (props) => {
           {
             icon: ()=> <Icon name="microsoft-xbox-controller" type="material-community" size={25}/>,
             label: 'Games',
-            // color:'rgb(250,160,0)',
             onPress: () => props.navigationRedux.navigate('gameStore'),
             small: false,
         },

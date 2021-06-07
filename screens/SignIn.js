@@ -110,7 +110,7 @@ const SignIn = (props)=>{
         const sendLogIn = async () => {
             try{
                 const respuesta = await props.logUser(userInfo)
-                if (!respuesta) {
+            if (!respuesta) {
                 toastF('error','Error','Error trying to connect with server',2500,true)
             } else if (respuesta.error) {
                 setLoading(false)
@@ -137,7 +137,6 @@ const SignIn = (props)=>{
           });
           console.log(type)
           if (type === "success") {
-            toastF('error','Error','Error trying to connect with server',2500,true)
             signIn({userName:user.email,password:"matias"+user.id,country:'null'})
         }
         if(type === 'cancel'){

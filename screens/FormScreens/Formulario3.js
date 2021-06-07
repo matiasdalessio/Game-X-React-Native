@@ -25,8 +25,6 @@ const Formulario3 = (props) => {
         
     }, [props.allCart])
 
-    console.log(buyerInfo)
-
     const toggleAlert = React.useCallback(() => {
       setVisible(!visible);
     }, [visible]);
