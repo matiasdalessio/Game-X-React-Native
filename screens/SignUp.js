@@ -174,10 +174,11 @@ const toastF = (type,title,text,visibilityTime,autoHide,onShow,onHide,onPress)=>
                          default:
                             toastF('success','Welcome','Welcome to Game-X',2500,true)
                             setLoading(false)
+                            props.newUserImage(pickedImagePath)
                             props.navigation.navigate('home')
                      }
                  }
-     }
+            }
 
      const signUpAsync = async () => {
         setLoading(true)
@@ -504,7 +505,8 @@ const mapStateToProps = state => {
     }
     }
     const mapDispatchToProps = {
-    newUser: userActions.newUser
+    newUser: userActions.newUser,
+    newUserImage: userActions.newUserImage
     }
     
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

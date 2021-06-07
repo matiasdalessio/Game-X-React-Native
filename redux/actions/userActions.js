@@ -156,6 +156,11 @@ const userActions = {
         return (dispatch,getState)=>{
             dispatch({type:'LOAD_NAVIGATION', payload:navigation})
         }
+    },
+    newUserImage: (file)=>{
+        return (dispatch, getState)=>{
+            dispatch({type:'NEW_USER_IMAGE',payload:file})
+        }
     }
 }
 

@@ -3,7 +3,8 @@ const initialState = {
     favouritesList:null,
     reloadMessages:false,
     Socket:null,
-    reloadFriendList:false
+    reloadFriendList:false,
+    newUserImage:null
 }
 
 const userReducer = (state = initialState, action) => {
@@ -47,6 +48,11 @@ const userReducer = (state = initialState, action) => {
             return{
                 ...state,
                 reloadFriendList:!state.reloadFriendList
+            }
+        case 'NEW_USER_IMAGE':
+            return{
+                ...state,
+                newUserImage:action.payload
             }
         default:
             return state

@@ -16,16 +16,22 @@ const IndividualHarware = (props)=> {
     const [hardware, setHardware] = useState({})
     useEffect(()=>{
         setHardware(props.route.params.hardware)
+        if (props.allCart && hardware) {
+            let hardwareInCart = props.allCart.find(productCart => productCart._id === game._id) 
+            hardwareInCart ? setInCart(true): setInCart(false)
+        }
     },[props.route.params])
 
     useEffect(()=>{
         props.navigation.addListener('blur',()=>{
             setHardware({})
+            setInCart(false)
         })
         return ()=>{
             props.navigation.removeListener('blur')
         }
     },[])
+
     const [inCart, setInCart] = useState(false)
     const addToCart = () => {
         setInCart(!inCart)

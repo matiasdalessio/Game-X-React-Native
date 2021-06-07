@@ -37,7 +37,6 @@ const FabPortal = (props) => {
 
   const containerStyles = {
       zIndex:100,
-    //   paddingBottom:'10%'
   }
     return (
     <Provider>
@@ -45,7 +44,7 @@ const FabPortal = (props) => {
         <FAB.Group
           open={open}
           fabStyle={fabStyle}
-          icon={()=> <Image source={{uri:props.userLogged.imageUrl === "" || !props.userLogged.imageUrl ? 'https://game-x-arg.herokuapp.com'+props.userLogged.avatar : props.userLogged.imageUrl }} style={logo}/>}
+          icon={()=> <Image source={{uri:!props.newUserImage ? (props.userLogged.imageUrl === "" || !props.userLogged.imageUrl ? 'https://game-x-arg.herokuapp.com'+props.userLogged.avatar : props.userLogged.imageUrl) : props.newUserImage }} style={logo}/>}
           style={[containerStyles, {shadowRadius:0}]}
           actions={[
             {
@@ -92,7 +91,8 @@ const FabPortal = (props) => {
 const mapStateToProps = state => {
     return{
       userLogged : state.userReducer.userLogged,
-      navigationRedux: state.navigationReducer.navigationRedux
+      navigationRedux: state.navigationReducer.navigationRedux,
+      newUserImage: state.userReducer.newUserImage
     }
   }
 const mapDispatchToProps = {

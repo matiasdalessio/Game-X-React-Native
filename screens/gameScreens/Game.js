@@ -16,7 +16,7 @@ import FabUserLogged from '../../components/FabUserLogged'
 
 const Game = (props) => {
     let imageBanner = { uri: 'https://image.api.playstation.com/cdn/UP0001/CUSA05904_00/IKYAgcRh0k3IOklJSDoNBTk5t5MSm7KE.png' }
-    const [game, setGame] = useState(null)
+    const [game, setGame] = useState({})
     const [view, setView] = useState({ show: false, textBtn: 'View More' })
     const [inCart, setInCart] = useState(false)
 
@@ -28,6 +28,18 @@ const Game = (props) => {
             gameInCart ? setInCart(true): setInCart(false)
         }
     }, [props.route.params])
+
+    useEffect(()=>{
+        props.navigation.addListener('blur',()=>{
+            setInCart(false)
+            setGame({})
+        })
+        return ()=>{
+            props.navigation.removeListener('blur')
+        }
+    },[])
+
+
     const addToCart = () => {
         setInCart(!inCart)
         props.addToCart({...game, cantidad:1})
@@ -35,6 +47,10 @@ const Game = (props) => {
     const removeToCart = () => {
         setInCart(!inCart)
         props.deleteToCart(game._id)
+    }
+
+    if(!game.imagesBackground){
+        return <ActivityIndicator />
     }
 
     return (
