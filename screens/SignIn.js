@@ -109,7 +109,6 @@ const SignIn = (props)=>{
         setLoading(true)
         const sendLogIn = async () => {
             try{
-
                 const respuesta = await props.logUser(userInfo)
                 if (!respuesta) {
                 toastF('error','Error','Error trying to connect with server',2500,true)
@@ -117,7 +116,6 @@ const SignIn = (props)=>{
                 setLoading(false)
                 toastF('error','Error',respuesta.error,2500,true)
             } else {
-            toastF('error','Error','Error trying to connect with server',2500,true)
             toastF('success','Welcome','Welcome to Game-X',2500,true)
                 setLoading(false)
                 setUser({userName:"",password:""})
@@ -137,15 +135,20 @@ const SignIn = (props)=>{
           const { type, user } = await Google.logInAsync({
             androidClientId: `382714051375-l6ppnha19bouskqa43p1kt5n1m0b61hr.apps.googleusercontent.com`,
           });
-    
+          console.log(type)
           if (type === "success") {
             toastF('error','Error','Error trying to connect with server',2500,true)
             signIn({userName:user.email,password:"matias"+user.id,country:'null'})
-          }
+        }
+        if(type === 'cancel'){
+            toastF('error','Error','Google window closed',2500,true)
+            setLoading(false)
+        }
         } catch (error) {
             toastF('error','Error','Error trying to connect with server',2500,true)
-          console.log("SignIn.js 142 | error with login", error);
-        }
+            setLoading(false)
+            console.log("SignIn.js 142 | error with login", error);
+            }
       };
     
     return (
@@ -168,17 +171,17 @@ const SignIn = (props)=>{
                             <TextInput style={styles.inputs} placeholder="password" secureTextEntry value={user.password} placeholderTextColor='rgba(255,255,255,.7)'  keyboardType="default" onChangeText={(e)=>readInput(e,"password")} />
                         </View>
                         <TouchableOpacity activeOpacity={.5} style={styles.signInButton} onPress={()=>signIn()}>
-                            <Text style={styles.signInButtonText}>Sign In</Text>
+                            <Text style={styles.signInButtonText}>Log In</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.otherSignInOptions}>
                         <TouchableOpacity activeOpacity={.6} style={styles.signInOption} onPress={signInAsync}>
                             <Icon name="google-plus" type="material-community" color="#ec4e1d" size={40}/>
-                            <Text style={styles.signInOptionText}>Sign in with Google</Text> 
+                            <Text style={styles.signInOptionText}>Log in with Google</Text> 
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={.6} style={styles.signInOption}>
                             <Icon name="facebook" type="material-community" color="#4064ac" size={40}/>
-                            <Text style={styles.signInOptionText}>Sign in with Facebook</Text> 
+                            <Text style={styles.signInOptionText}>Log in with Facebook</Text> 
                         </TouchableOpacity>
                     </View>
                     <View style={styles.footer}>

@@ -12,6 +12,7 @@ import Toast from 'react-native-toast-message'
 import * as ImagePicker from 'expo-image-picker';
 import {Picker} from '@react-native-picker/picker'
 import axios from 'axios';
+import * as Google from "expo-google-app-auth";
 
 const SignUp = (props)=>{
     const [newUser, setNewUser] = useState({userName:"",password:"",country:"",email:""})
@@ -173,7 +174,7 @@ const toastF = (type,title,text,visibilityTime,autoHide,onShow,onHide,onPress)=>
                          default:
                             toastF('success','Welcome','Welcome to Game-X',2500,true)
                             setLoading(false)
-
+                            props.navigation.navigate('home')
                      }
                  }
      }
@@ -186,9 +187,7 @@ const toastF = (type,title,text,visibilityTime,autoHide,onShow,onHide,onPress)=>
           });
     
           if (type === "success") {
-              toastF('success','Welcome','Welcome to Game-X',2500,true)
-              signUp({userName:user.email,password:"matias"+user.id,country:'null',imageUrl:user.photoUrl,avatar:user.photoUrl})
-              setLoading(false)
+              signUp({userName:user.email,password:"matias"+user.id,country:'null',imageUrl:user.photoUrl,avatar:user.photoUrl,email:user.email})
           }
         } catch (error) {
             setLoading(false)

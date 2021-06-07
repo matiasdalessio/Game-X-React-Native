@@ -71,9 +71,9 @@ const TabNavigator = (propsComponente)=>{
 
             <Tab.Screen name="home" component={Index}/>
 
-             <Tab.Screen name="gameStore" component={GameStore}/>
+            <Tab.Screen name="gameStore" component={GameStore}/>
 
-             <Tab.Screen name="storeMain" component={Store}/> 
+            <Tab.Screen name="storeMain" component={Store}/> 
 
             <Tab.Screen name="signUp" component={SignUp}/>
 
@@ -89,11 +89,11 @@ const TabNavigator = (propsComponente)=>{
 
             <Tab.Screen name="cart" component={Cart}/>
 
-            <Tab.Screen name="formulario" component={Formulario}/>
+            {propsComponente.userLogged && <Tab.Screen name="formulario" component={Formulario}/>}
 
-            <Tab.Screen name="formulario2" component={Formulario2}/>
+            {propsComponente.userLogged && <Tab.Screen name="formulario2" component={Formulario2}/>}
 
-            <Tab.Screen name="formulario3" component={Formulario3}/>
+            {propsComponente.userLogged && <Tab.Screen name="formulario3" component={Formulario3}/>}
 
         </Tab.Navigator>
     )

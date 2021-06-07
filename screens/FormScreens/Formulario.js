@@ -24,7 +24,7 @@ const Formulario = (props) => {
         firstName: '',
         lastName: '',
         city: '',
-        phone: '',
+        cellphone: '',
         direction: ''
     })
     const leerInput = (e, campo) => {
@@ -74,7 +74,7 @@ const Formulario = (props) => {
                         <TextInput theme={{ colors: { primary: '#0BC6C3' } }} style={Styles.input}
                             placeholder="Please Insert Your Phone Number"
                             placeholderTextColor='grey'
-                            onChangeText={(e) => leerInput(e, 'phone')}
+                            onChangeText={(e) => leerInput(e, 'cellphone')}
                             keyboardType={'number-pad'} />
                     </View>
                     <View>

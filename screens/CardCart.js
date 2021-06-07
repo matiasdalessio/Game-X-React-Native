@@ -32,7 +32,7 @@ const CardCart = (props) => {
                     </ImageBackground>
                 </View>
                 <View style={{ justifyContent: 'space-between' }}>
-                    <Text style={{ color: 'black', fontSize: hp('2%') }}>{productCart.title}</Text>
+                    <Text style={{ color: 'black', fontSize: hp('2%') }}>{productCart.productName || productCart.title}</Text>
                     <Text style={{ color: 'black', fontSize: hp('3%'), textAlign: 'right' }}>${discount}</Text>
                 </View>
             </View>

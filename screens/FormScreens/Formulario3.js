@@ -22,7 +22,10 @@ const Formulario3 = (props) => {
         setBuyerInfo(props.route.params.newSell)
         setCreditCardInfo(props.route.params.creditCard)
         setTotalPrice(props.route.params.totalPrice)
+        
     }, [props.allCart])
+
+    console.log(buyerInfo)
 
     const toggleAlert = React.useCallback(() => {
       setVisible(!visible);

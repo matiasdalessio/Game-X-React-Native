@@ -9,7 +9,6 @@ import { Icon } from 'react-native-elements'
 import gameStyles from '../../styles/gameStyles';
 import { Button } from 'react-native-paper';
 import cartActions from '../../redux/actions/cartActions'
-import Loader from '../Loader';
 import FabUserLogged from '../../components/FabUserLogged'
 
 
@@ -39,7 +38,6 @@ const IndividualHarware = (props)=> {
     if(!hardware.productName){
         return (<View style={{ backgroundColor: '#061320', width: wp('100%'), height: hp('100%'), alignItems: 'center', justifyContent: 'center' }}>
                     <ActivityIndicator size={'large'} color='white' />
-                    {/* <Loader /> */}
                 </View>)
     }
     
