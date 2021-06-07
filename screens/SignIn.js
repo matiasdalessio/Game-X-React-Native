@@ -116,7 +116,7 @@ const SignIn = (props)=>{
                 setLoading(false)
                 toastF('error','Error',respuesta.error,2500,true)
             } else {
-            toastF('success','Welcome','Welcome to Game-X',2500,true)
+                toastF('success','Welcome','Welcome to Game-X',2500,true)
                 setLoading(false)
                 setUser({userName:"",password:""})
                 props.navigation.navigate('home')

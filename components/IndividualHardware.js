@@ -5,11 +5,9 @@ import { connect } from 'react-redux';
 import hardwareActions from './redux/actions/hardwareActions'
 
 const IndividualHarware = (props)=> {
-    //const [IndividualHardware , setIndividualHardware] = useState([])
     useEffect(()=>{
         props.loadHardware()
     },[])
-    // console.log("soy un elemento" , props.allHardware[0])
   return (
     <>
     <StatusBar barStyle="light-content" />

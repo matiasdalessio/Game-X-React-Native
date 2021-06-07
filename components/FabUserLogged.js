@@ -39,7 +39,6 @@ const FabPortal = (props) => {
       zIndex:100,
     //   paddingBottom:'10%'
   }
-console.log(props.userLogged)
     return (
     <Provider>
       <Portal>
